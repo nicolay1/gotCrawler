@@ -4,7 +4,7 @@ from src.models.Show import *
 class UserController:
 
     """
-        This class is our UserController
+        This controller manages the User model
     """
 
     @classmethod

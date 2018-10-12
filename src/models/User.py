@@ -5,7 +5,7 @@ from typing import List
 class User:
 
     """
-        This class represents our User and is populated by the database
+        This class represents our Users and is populated by the database
     """
 
     def __init__(self, firstname: str, surname: str, login: str, pwd: str, poster: str,
@@ -23,7 +23,7 @@ class User:
     def id(self):
         return self.__id
 
-    def __setId(self,id):
+    def __setId(self,id: int):
         if type(id) is not int and id is not None:
             raise TypeError("Id should be an integer")
         else :
@@ -36,7 +36,7 @@ class User:
         return self.__firstname
 
     @firstname.setter
-    def firstname(self, firstname):
+    def firstname(self, firstname : str):
         if type(firstname) is not str:
             raise TypeError("Firstname should be a string")
         else:
@@ -47,7 +47,7 @@ class User:
         return self.__surname
 
     @surname.setter
-    def surname(self, surname):
+    def surname(self, surname : str):
         if type(surname) is not str:
             raise TypeError("Surname should be a string")
         else:
@@ -57,7 +57,7 @@ class User:
     def login(self):
         return self.__login
 
-    def __setLogin(self, login):
+    def __setLogin(self, login : str):
         if type(login) is not str:
             raise TypeError("Login should be a string")
         else:
@@ -67,7 +67,7 @@ class User:
     def pwd(self):
         return self.__pwd
 
-    def __setPwd(self, pwd):
+    def __setPwd(self, pwd : str):
         if type(pwd) is not str:
             raise TypeError("Password should be a string")
         else:
@@ -78,7 +78,7 @@ class User:
         return self.__poster
 
     @poster.setter
-    def poster(self, poster):
+    def poster(self, poster : str):
         if type(poster) is not str:
             raise TypeError("Poster url should be a string")
         else:
@@ -89,7 +89,7 @@ class User:
         return self.__list_preferences
 
     @list_preferences.setter
-    def list_preferences(self, list_preferences):
+    def list_preferences(self, list_preferences : List[Show]):
         if type(list_preferences) is not List[Show] and list_preferences is not None:
             raise TypeError("List of preferences should be a list of preferences")
         else:
