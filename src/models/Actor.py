@@ -15,7 +15,7 @@ class Actor(Person):
 
     @pict.setter
     def pict(self, pict):
-        if type(pict) != str:
+        if type(pict) is not str:
             raise TypeError("The attribute pict of Actor should be a string.")
         else:
             self.__pict = pict

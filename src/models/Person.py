@@ -15,7 +15,7 @@ class Person(ABC):
 
     @name.setter
     def name(self, name):
-        if type(name) != str:
+        if type(name) is not str:
             raise TypeError("The attribute name of Person should be a string.")
         else:
             self.__name = name
@@ -26,7 +26,7 @@ class Person(ABC):
 
     @surname.setter
     def surname(self, surname):
-        if type(surname) != str:
+        if type(surname) is not str:
             raise TypeError("The attribute surname of Person should be a string.")
         else:
             self.__surname = surname
