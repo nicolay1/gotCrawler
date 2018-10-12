@@ -6,27 +6,27 @@ class Person(ABC):
         Abstract class of which Actor and Author inherit.
     """
     def __init__(self, name: str, surname: str):
-        self.__name = name
-        self.__surname = surname
+        self._name = name
+        self._surname = surname
 
     @property
     def name(self):
-        return self.__name
+        return self._name
 
     @name.setter
-    def name(self, name):
+    def name(self, name: str):
         if type(name) is not str:
             raise TypeError("The attribute name of Person should be a string.")
         else:
-            self.__name = name
+            self._name = name
 
     @property
     def surname(self):
-        return self.__surname
+        return self._surname
 
     @surname.setter
-    def surname(self, surname):
+    def surname(self, surname: str):
         if type(surname) is not str:
             raise TypeError("The attribute surname of Person should be a string.")
         else:
-            self.__surname = surname
+            self._surname = surname
