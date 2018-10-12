@@ -4,8 +4,8 @@ from typing import List
 
 class User:
 
-    def __init__(self, id: int, firstname: str, surname: str, login: str, pwd: str, poster: str,
-                 list_preferences: List[Serie]=None):
+    def __init__(self, firstname: str, surname: str, login: str, pwd: str, poster: str,
+                 list_preferences: List[Serie]=None, id:int = None):
         self.__id = id
         self.__firstname = firstname
         self.__surname = surname
@@ -17,6 +17,17 @@ class User:
     @property
     def id(self):
         return self.__id
+
+    @id.setter
+    def id(self,value):
+        if value == None :
+            self.__id=0
+        elif type(value) is not int:
+            raise TypeError("Id should be an integer")
+        else :
+            self.__id = value
+
+
 
     @property
     def firstname(self):
@@ -84,12 +95,11 @@ class User:
         else:
             self.__list_preferences = value
 
-    @classmethod
-    def create_user_in_bdd(cls, firstname: str, surname: str, login: str, pwd: str, poster: str,
-                           list_preferences: List[Serie]):
+
+    def create_user_in_bdd(self):
+        pass
         # TODO requete SQL
         # id = USERINBDD (id)
-        return cls(id, firstname, surname, login, pwd, poster, list_preferences)
 
     def update_user_in_bdd(self, firstname: str = None, surname: str = None, login: str = None, pwd: str = None,
                            poster: str = None, list_preferences: List[Serie] = None):
