@@ -35,6 +35,6 @@ CREATE TABLE IF NOT EXISTS user (
 );
 -- populate user
 INSERT INTO user (id, surname, name, login, pwd, pict) VALUES 
-(1, 'Fley', 'Nicolas', 'stook', 'mymdp', NULL),
-(2, 'Guibert', 'Rachel', 'shiva', 'mymdp', NULL),
-(3, 'Chapuis', 'Amelie', 'amelie', 'mymdp', NULL);
+(1, 'Fley', 'Nicolas', 'stook', 'mymdp', ''),
+(2, 'Guibert', 'Rachel', 'shiva', 'mymdp', ''),
+(3, 'Chapuis', 'Amelie', 'amelie', 'mymdp', '');
