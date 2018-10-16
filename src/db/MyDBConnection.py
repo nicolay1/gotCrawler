@@ -47,9 +47,11 @@ class MyDBConnection:
         # we finaly return the result
         return query_results
     
-    def exec_one(self, query: str):
+    def exec_one(self, query: str, args: Tuple = ()):
         """
             query: the query to be executed
+            args: Tuple of args to be binded in the query
+            --
             result: an iterator which yield every rows from the SQL result
         """
 
@@ -61,11 +63,14 @@ class MyDBConnection:
         cursor = self.__db_connexion.cursor()
         
         # we execute the query and fetch the result
-        query_result = cursor.execute(query)
+        print(query,args)
+        if type(args) is int or type(args) is float:
+            args = (args,)
+        query_result = cursor.execute(query, args)
 
         # the commit make sure that all the precedent executed query have been
         # properly executed (especially in multi-threaded context)
         self.__db_connexion.commit()
 
         # we finaly return the resule
-        return query_result
+        return [query for query in query_result]
