@@ -9,7 +9,7 @@ class User:
         This class represents our Users and is populated by the database
     """
     def __init__(self, firstname: str, surname: str, login: str, pwd: str, poster: str,
-                 list_preferences: List[Show] = None, id:int = None, db_instance=None):
+                 list_preferences: List[Show] = None, id:int = None):
         self.__setId(id)
         self.firstname = firstname
         self.surname = surname
@@ -17,7 +17,6 @@ class User:
         self.__setPwd(pwd)
         self.poster = poster
         self.list_preferences = list_preferences
-        self.__db_instance = db_instance
 
     @property
     def id(self):
@@ -103,7 +102,6 @@ class User:
             self.firstname, self.surname, self.login, self.pwd, self.poster
         ))
         new_user = User.retrieve_user_from_credentials(self.login, self.pwd, my_db)
-        print(new_user)
         self.__setId(new_user.id)
 
     def update_user_in_bdd(self, my_db: MyDBConnection, firstname: str = None, surname: str = None, login: str = None, pwd: str = None,
@@ -121,7 +119,7 @@ class User:
         if list_preferences is not None:
             self.list_preferences = list_preferences
         my_db.exec_one("UPDATE USER SET firstname=(?), surname=(?), login=(?), pwd=(?), poster=(?) WHERE id=(?)", 
-            (self.firstname, self.surname, self.login, self.pwd, self.poster)
+            (self.firstname, self.surname, self.login, self.pwd, self.poster, self.id)
         )
         # TODO apply update on preferences, maybe in the controller
 
@@ -131,15 +129,13 @@ class User:
 
     @classmethod
     def retrieve_user_from_credentials(cls, login: str, pwd: str, my_db: MyDBConnection):
-        #print(my_db.exec_one("SELECT * from `user` WHERE login = (?) AND pwd = (?)", (login, pwd)))
-        #firstname, surname, login, pwd, poster 
         user_res = my_db.exec_one("SELECT * from `user` WHERE login = (?) AND pwd = (?)", (login, pwd))
         if not user_res:
             return None
-        user_res = user_res[0]
-        return User(user_res[0], user_res[1], user_res[2], user_res[3], user_res[4], id=user_res[5])
+        firstname, surname, login, pwd, poster, user_id = user_res[0]
+        return User(firstname, surname, login, pwd, poster, id=user_id)
     
     def __str__(self):
-        return """id:{},firstname:{},surname:{},login:{},poster:{}""".format(
+        return """id:{}, firstname:{}, surname:{}, login:{}, poster:{}""".format(
             self.id, self.firstname, self.surname, self.login, self.poster
         )
