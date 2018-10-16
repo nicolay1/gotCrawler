@@ -134,3 +134,7 @@ fabric.properties
 
 # do not include databases
 db/*.db
+
+# do not include test file
+src/test.py
+
