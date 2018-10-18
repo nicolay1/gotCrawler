@@ -2,7 +2,7 @@
 from src.models.Season import Season
 from typing import List
 from datetime import datetime
-
+from db.MyDBConnection import MyDBConnection
 
 class Show:
     """
@@ -151,14 +151,20 @@ class Show:
         else:
             self.__number_of_seasons = number_of_seasons
 
-    def create_show_in_bdd(self):
-        pass
-        # TODO requete SQL
+    def create_show_in_bdd(self, my_db: MyDBConnection):
+        my_db.exec_one("""
+        INSERT INTO show (pict, last_maj, title, season_next_episode, next_episode_date, next_episode_num, api_id) 
+        VALUES ((?), (?), (?), (?), (?), (?), (?), (?))""", (
+            self.pict, self.last_maj, self.title, self.season_next_episode_num, self.date_next_episode,
+            self.next_episode_num, self.api_id
+        ))
+        new_show = Show.retrieve_show_from_bdd(self.api_id, my_db)
+        self.__set_db_id(new_show.db_id)
 
-    def update_show(self, pict: str = None, season_next_episode_num: int = None, next_episode_num: int = None,
-                    date_next_episode: datetime = None, season_list: List[Season] = None, number_of_episodes: int =
-                    None, number_of_seasons: int = None):
-        # TODO requête SQL pour update pict, season_next_episode_num, next_episode_num, date_next_episode
+
+    def update_show(self, my_db: MyDBConnection, pict: str = None, season_next_episode_num: int = None,
+                    next_episode_num: int = None, date_next_episode: datetime = None, season_list: List[Season] = None,
+                    number_of_episodes: int = None, number_of_seasons: int = None):
         if pict is not None:
             self.__set_pict(pict)
         if season_next_episode_num is not None:
@@ -174,3 +180,17 @@ class Show:
             self.__set_number_of_episodes(number_of_episodes)
         if number_of_seasons is not None:
             self.__set_number_of_seasons(number_of_seasons)
+        my_db.exec_one("UPDATE SHOW SET pict=(?), last_maj=(?), season_next_episode=(?), next_episode_date=(?), "
+                       "next_episode_num=(?), WHERE api_id=(?)",
+            (self.pict, self.last_maj, self.season_next_episode_num, self.date_next_episode, self.next_episode_num,
+             self.api_id)
+        )
+
+
+    @classmethod
+    def retrieve_show_from_bdd(cls, api_id: int, my_db: MyDBConnection):
+        show_res = my_db.exec_one("SELECT * from `show` WHERE api_id = (?)", (api_id))
+        if not show_res:
+            return None
+        pict, last_maj, title, season_next_episode_num, next_episode_date, next_episode_num, api_id, id = show_res[0]
+        return Show(title, pict, api_id, season_next_episode_num, next_episode_num, next_episode_date, last_maj, id)
