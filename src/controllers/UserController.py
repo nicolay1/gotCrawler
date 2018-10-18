@@ -29,6 +29,6 @@ class UserController:
         user.delete_user_in_bdd()
 
     @classmethod
-    def get_user_notification(cls, user : User):
-        Notification.get_notification_from_user_id(user.id)
+    def get_user_notification(cls, user: User):
+        Notification.get_notification_from_user(user)
 
