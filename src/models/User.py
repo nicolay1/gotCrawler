@@ -10,19 +10,19 @@ class User:
     """
     def __init__(self, firstname: str, surname: str, login: str, pwd: str, poster: str,
                  list_preferences: List[Show] = None, id:int = None):
-        self.__setId(id)
-        self.firstname = firstname
-        self.surname = surname
-        self.__setLogin(login)
-        self.__setPwd(pwd)
-        self.poster = poster
-        self.list_preferences = list_preferences
+        self.__set_id(id)
+        self.__set_firstname(firstname)
+        self.__set_surname(surname)
+        self.__set_login(login)
+        self.__set_pwd(pwd)
+        self.__set_poster(poster)
+        self.__set_list_preferences(list_preferences)
 
     @property
     def id(self):
         return self.__id
 
-    def __setId(self,id: int):
+    def __set_id(self,id: int):
         if type(id) is not int and id is not None:
             raise TypeError("Id should be an integer")
         else :
@@ -34,8 +34,7 @@ class User:
     def firstname(self):
         return self.__firstname
 
-    @firstname.setter
-    def firstname(self, firstname : str):
+    def __set_firstname(self, firstname : str):
         if type(firstname) is not str:
             raise TypeError("Firstname should be a string")
         else:
@@ -45,8 +44,7 @@ class User:
     def surname(self):
         return self.__surname
 
-    @surname.setter
-    def surname(self, surname : str):
+    def __set_surname(self, surname : str):
         if type(surname) is not str:
             raise TypeError("Surname should be a string")
         else:
@@ -56,7 +54,7 @@ class User:
     def login(self):
         return self.__login
 
-    def __setLogin(self, login : str):
+    def __set_login(self, login : str):
         if type(login) is not str:
             raise TypeError("Login should be a string")
         else:
@@ -66,7 +64,7 @@ class User:
     def pwd(self):
         return self.__pwd
 
-    def __setPwd(self, pwd : str):
+    def __set_pwd(self, pwd : str):
         if type(pwd) is not str:
             raise TypeError("Password should be a string")
         else:
@@ -76,8 +74,7 @@ class User:
     def poster(self):
         return self.__poster
 
-    @poster.setter
-    def poster(self, poster : str):
+    def __set_poster(self, poster : str):
         if type(poster) is not str:
             raise TypeError("Poster url should be a string")
         else:
@@ -87,8 +84,7 @@ class User:
     def list_preferences(self):
         return self.__list_preferences
 
-    @list_preferences.setter
-    def list_preferences(self, list_preferences : List[Show]):
+    def __set_list_preferences(self, list_preferences : List[Show]):
         if type(list_preferences) is not List[Show] and list_preferences is not None:
             raise TypeError("List of preferences should be a list of preferences")
         else:
@@ -96,28 +92,30 @@ class User:
 
 
     def create_user_in_bdd(self, my_db: MyDBConnection):
-        my_db.exec_one("""
-        INSERT INTO user (surname, name, login, pwd, pict) VALUES 
-        ((?), (?), (?), (?), (?))""", (
-            self.firstname, self.surname, self.login, self.pwd, self.poster
-        ))
-        new_user = User.retrieve_user_from_credentials(self.login, self.pwd, my_db)
-        self.__setId(new_user.id)
+        new_user=self.retrieve_user_from_credentials(self.login,self.pwd,my_db)
+        if new_user==None:
+            my_db.exec_one("""
+            INSERT INTO user (surname, name, login, pwd, pict) VALUES 
+            ((?), (?), (?), (?), (?))""", (
+                self.firstname, self.surname, self.login, self.pwd, self.poster
+            ))
+            new_user = User.retrieve_user_from_credentials(self.login, self.pwd, my_db)
+            self.__set_id(new_user.id)
 
     def update_user_in_bdd(self, my_db: MyDBConnection, firstname: str = None, surname: str = None, login: str = None, pwd: str = None,
                            poster: str = None, list_preferences: List[Show]= None):
         if firstname is not None:
-            self.firstname = firstname
+            self.__set_firstname(firstname)
         if surname is not None:
-            self.surname = surname
+            self.__set_surname(surname)
         if login is not None:
-            self.__setLogin(login)
+            self.__set_login(login)
         if pwd is not None:
-            self.__setPwd(pwd)
+            self.__set_pwd(pwd)
         if poster is not None:
-            self.poster = poster
+            self.__set_poster(poster)
         if list_preferences is not None:
-            self.list_preferences = list_preferences
+            self.__set_list_preferences(list_preferences)
         my_db.exec_one("UPDATE USER SET firstname=(?), surname=(?), login=(?), pwd=(?), poster=(?) WHERE id=(?)", 
             (self.firstname, self.surname, self.login, self.pwd, self.poster, self.id)
         )
@@ -134,7 +132,8 @@ class User:
             return None
         firstname, surname, login, pwd, poster, user_id = user_res[0]
         return User(firstname, surname, login, pwd, poster, id=user_id)
-    
+
+
     def __str__(self):
         return """id:{}, firstname:{}, surname:{}, login:{}, poster:{}""".format(
             self.id, self.firstname, self.surname, self.login, self.poster
