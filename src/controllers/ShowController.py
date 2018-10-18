@@ -48,8 +48,10 @@ class ShowController:
     @classmethod
     def add_show(cls, my_db:MyDBConnection, title: str, pict: str, api_id: int, season_next_episode_num: int,
                  next_episode_num: int, date_next_episode:datetime):
-        show = Show(title, pict, api_id, season_next_episode_num, next_episode_num, date_next_episode)
-        show.create_show_in_bdd(my_db)
+        show = Show.retrieve_show_from_bdd(api_id, my_db)
+        if show is None:
+            show = Show(title, pict, api_id, season_next_episode_num, next_episode_num, date_next_episode)
+            show.create_show_in_bdd(my_db)
 
     @classmethod
     def update_show(cls, my_db: MyDBConnection, show: Show, pict: str = None, season_next_episode_num: int = None,
