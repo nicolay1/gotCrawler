@@ -1,5 +1,5 @@
 from src.models.Show import *
-from db.MyDBConnection import MyDBConnection
+from src.db.MyDBConnection import MyDBConnection
 
 class ShowController:
     """

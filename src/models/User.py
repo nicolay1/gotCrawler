@@ -1,7 +1,7 @@
 from typing import List
 
-from models.Show import *
-from db.MyDBConnection import MyDBConnection
+from src.models.Show import *
+from src.db.MyDBConnection import MyDBConnection
 
 
 class User:
