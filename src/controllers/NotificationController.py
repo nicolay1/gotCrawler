@@ -10,12 +10,12 @@ class NotificationController:
     """
     @classmethod
     def get_one(cls, my_db: MyDBConnection, user: User, show: Show):
-        notification = Notification.retrieve_notification_from_bdd(id_user=user.id, id_show=show.db_id, my_db=my_db)
+        notification = Notification.retrieve_notification_from_bdd(my_db=my_db, id_user=user.id, id_show=show.db_id)
         return notification
 
     @classmethod
     def add_notification(cls, my_db: MyDBConnection, user: User, show: Show, seen_flag: bool):
-        notification = Notification.retrieve_notification_from_bdd(id_user=user.id, id_show=show.db_id, my_db=my_db)
+        notification = Notification.retrieve_notification_from_bdd(my_db=my_db, id_user=user.id, id_show=show.db_id)
         if notification is None:
             notification = Notification(id_user=user.id, id_show=show.db_id, num_season=show.season_next_episode_num,
                                         num_ep=show.next_episode_num, date_ep=show.date_next_episode,

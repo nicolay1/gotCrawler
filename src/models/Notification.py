@@ -104,17 +104,17 @@ class Notification:
                 ((?), (?), (?))""", (
             self.id_user, self.id_show, self.seen_flag
         ))
-        new_notif = Notification.retrieve_notification_from_bdd(self.id_user, self.id_show, my_db)
+        new_notif = Notification.retrieve_notification_from_bdd(my_db, self.id_user, self.id_show)
         self.__set_id(new_notif.id)
 
     @classmethod
-    def retrieve_notification_from_bdd(cls, id_user: int, id_show: int, my_db: MyDBConnection):
+    def retrieve_notification_from_bdd(cls, my_db: MyDBConnection, id_user: int, id_show: int):
         notification_res = my_db.exec_one("SELECT * from `notification` WHERE id_user = (?) AND id_show = (?)",
                                           (id_user, id_show))
         if not notification_res:
             return None
         id_user, id_show, seen_flag, new_id = notification_res[0]
-        return Notification(id_user, id_show, id=new_id)
+        return Notification(id_user=id_user, id_show=id_show, seen_flag=seen_flag, new_id=new_id)
 
     def update_notification_in_bdd(self, my_db: MyDBConnection, num_season: int = None, num_ep: int = None,
                                    date_ep: datetime=None, seen_flag: bool=None):
