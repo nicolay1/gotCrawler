@@ -36,7 +36,7 @@ class ApiHelper:
             url = urljoin(self.root_api, ressource_path) + query_params_str
         else:
             url = urljoin(self.root_api, ressource_path.format(*path_param)) + query_params_str
-        
+
         print("Built url : {}".format(url))
         response = requests.get(url)
         if response.status_code == 200:
@@ -62,3 +62,27 @@ class ApiHelper:
             raise TypeError("Default query params API should be a dict")
         else:
             self.__default_query_params = default_query_params
+
+    def get_trending(self, page=1):
+        return self._get("trending/tv/week", None, {"page":page})
+
+    ####
+    # to be implemented methods by children classes
+    ####
+    def get_show(self, show_id: int):
+        raise NotImplementedError
+
+    def get_season(self, show_id: int, season_number: int):
+        raise NotImplementedError
+
+    def get_episode(self, show_id: int, season_number: int, episode_number: int):
+        raise NotImplementedError
+
+    def _api_json_to_show(self, show_json: Dict):
+        raise NotImplementedError
+
+    def _api_json_to_season(self, season_json: Dict):
+        raise NotImplementedError
+
+    def _api_json_to_episode(self, episode_json: Dict):
+        raise NotImplementedError
