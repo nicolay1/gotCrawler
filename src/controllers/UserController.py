@@ -44,7 +44,7 @@ class UserController:
         show=ShowController.get_one_minimal_info(api_id,my_db)
         if show.id is None:
             ShowController.add_show(my_db,show.title,show.pict,show.api_id,show.season_next_episode_num, show.next_episode_num, show.date_next_episode)
-        NotificationController.add_notification(user,show)
+        NotificationController.add_notification(user,show,seen_flag=False)
 
     @classmethod
     def delete_user_preference(cls,user:User,show:Show,my_db : MyDBConnection):
