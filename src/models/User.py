@@ -95,7 +95,7 @@ class User:
         new_user=self.retrieve_user_from_credentials(self.login,self.pwd,my_db)
         if new_user==None:
             my_db.exec_one("""
-            INSERT INTO user (surname, name, login, pwd, pict) VALUES 
+            INSERT INTO user (surname, firstname, login, pwd, poster) VALUES 
             ((?), (?), (?), (?), (?))""", (
                 self.firstname, self.surname, self.login, self.pwd, self.poster
             ))
