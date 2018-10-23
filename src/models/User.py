@@ -22,13 +22,11 @@ class User:
     def id(self):
         return self.__id
 
-    def __set_id(self,id: int):
-        if type(id) is not int and id is not None:
+    def __setId(self, new_id: int):
+        if type(new_id) is not int and new_id is not None:
             raise TypeError("Id should be an integer")
         else :
-            self.__id = id
-
-
+            self.__id = new_id
 
     @property
     def firstname(self):
@@ -89,7 +87,6 @@ class User:
             raise TypeError("List of preferences should be a list of preferences")
         else:
             self.__list_preferences = list_preferences
-
 
     def create_user_in_bdd(self, my_db: MyDBConnection):
         new_user=self.retrieve_user_from_credentials(self.login,self.pwd,my_db)

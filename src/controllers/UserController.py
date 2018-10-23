@@ -1,5 +1,6 @@
 from src.models.User import *
 from src.models.Show import *
+from src.models.Notification import *
 
 class UserController:
 
@@ -26,4 +27,8 @@ class UserController:
     @classmethod
     def del_user(cls, user: User):
         user.delete_user_in_bdd()
+
+    @classmethod
+    def get_user_notification(cls, user : User):
+        Notification.get_notification_from_user_id(user.id)
 
