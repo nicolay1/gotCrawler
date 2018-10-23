@@ -3,7 +3,7 @@ import json
 
 # will be read in this order
 CONFIG_TO_BE_READ = ['default', 'secret']
-CONFIG_DIR = "../config"
+CONFIG_DIR = "config"
 
 # this is our config
 CONFIG = {}

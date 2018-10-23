@@ -35,7 +35,7 @@ class ApiHelper:
         if path_param is None:
             url = urljoin(self.root_api, ressource_path) + query_params_str
         else:
-            url = urljoin(self.root_api, ressource_path.format(path_param)) + query_params_str
+            url = urljoin(self.root_api, ressource_path.format(*path_param)) + query_params_str
         
         print("Built url : {}".format(url))
         response = requests.get(url)

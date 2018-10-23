@@ -1,6 +1,6 @@
 from urllib.parse import urljoin
 
-from config import CONFIG
+from src.config import CONFIG
 from .ApiHelper import ApiHelper
 
 class ApiHelperTMDB(ApiHelper):
