@@ -138,3 +138,6 @@ db/*.db
 # do not include test file
 src/test.py
 
+# do not include secret
+config/secret.json
+

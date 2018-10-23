@@ -27,14 +27,14 @@ INSERT INTO notification (id, id_user, id_show, seen_flag) VALUES
 
 CREATE TABLE IF NOT EXISTS user (
     surname VARCHAR(255),
-    name VARCHAR(255),
+    firstname VARCHAR(255),
     login VARCHAR(255),
     pwd VARCHAR(255),
-    pict VARCHAR(1024),
+    poster VARCHAR(1024),
     id INTEGER PRIMARY KEY
 );
 -- populate user
-INSERT INTO user (id, surname, name, login, pwd, pict) VALUES 
+INSERT INTO user (id, surname, firstname, login, pwd, poster) VALUES 
 (1, 'Fley', 'Nicolas', 'stook', 'mymdp', ''),
 (2, 'Guibert', 'Rachel', 'shiva', 'mymdp', ''),
 (3, 'Chapuis', 'Amelie', 'amelie', 'mymdp', '');

@@ -36,8 +36,8 @@ class UserController:
         user.delete_user_in_bdd(my_db=my_db)
 
     @classmethod
-    def get_user_preference(cls, user: User):
-        Notification.get_notification_from_user_id(user.id)
+    def get_user_notification(cls, user: User):
+        Notification.get_notification_from_user(user)
 
     @classmethod
     def add_preference_to_user(cls,user:User, api_id:int, my_db):
