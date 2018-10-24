@@ -1,11 +1,12 @@
-from src.models.Season import *
+from src.api_helper.ApiHelperTMDB import ApiHelperTMDB
 
 
 class SeasonController:
-
     """
         This controller manages the season model
     """
+
     @classmethod
-    def get_all_episodes(cls, show_id: int, num_season: int):
-        pass
+    def get_one_season(cls, show_id: int, num_season: int):
+        api = ApiHelperTMDB()
+        api.get_season(show_id, num_season)
