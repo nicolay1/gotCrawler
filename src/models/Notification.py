@@ -1,6 +1,7 @@
 from datetime import *
 from src.db.MyDBConnection import MyDBConnection
 from src.models.User import User
+from src.models.Show import Show
 
 
 class Notification:
@@ -136,8 +137,17 @@ class Notification:
 
     @classmethod
     def get_notification_from_user(cls, user: User, my_db: MyDBConnection):
-        if User is None:
+        if user is None:
             raise TypeError("The user from which we want to get notifications is not valid")
         else:
             list_notifications = my_db.exec_one("SELECT * from `notification` WHERE id_user = (?)", (user.id))
+            return list_notifications
+
+
+    @classmethod
+    def get_notification_from_show(cls, show: Show, my_db: MyDBConnection):
+        if show is None:
+            raise TypeError("The show from which we want to get notifications is not valid")
+        else:
+            list_notifications = my_db.exec_one("SELECT * from `notification` WHERE id_show = (?)", (show.db_id))
             return list_notifications

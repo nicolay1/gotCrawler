@@ -1,5 +1,7 @@
 from src.models.Show import *
 from src.db.MyDBConnection import MyDBConnection
+from src.models.Notification import *
+from src.controllers.NotificationController import *
 
 class ShowController:
     """
@@ -61,3 +63,9 @@ class ShowController:
                          next_episode_num=next_episode_num, date_next_episode=date_next_episode,
                          season_list=season_list, number_of_episodes=number_of_episodes,
                          number_of_seasons=number_of_seasons)
+        for notification in Notification.get_notification_from_show(show, my_db):
+            new_seen_flag = False
+            if (notification.seen_flag or show.next_episode_num != notification.num_ep
+                    or show.date_next_episode != notification.date_ep):
+                new_seen_flag = True
+            NotificationController.update_notification(my_db, notification, show, seen_flag=new_seen_flag)
