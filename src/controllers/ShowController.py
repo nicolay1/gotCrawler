@@ -1,5 +1,7 @@
 from src.models.Show import *
 from src.db.MyDBConnection import MyDBConnection
+from src.api_helper.ApiHelperTMDB import ApiHelperTMDB
+
 
 class ShowController:
     """
@@ -18,13 +20,10 @@ class ShowController:
         show = Show.retrieve_show_from_bdd(api_id, my_db)
         if show is not None:
             # the show is in DB
-            if (datetime.now()-show.last_maj).seconds > 3600:
-                # the last update is too old, we update the show in API in DB.
-                #TODO call API
-                cls.update_show(my_db, show, pict, season_next_episode_num, next_episode_num, date_next_episode)
+            ShowController.check_for_update(my_db, show)
         else:
-            #TODO call API
-            show = Show(title, pict, api_id, season_next_episode_num, next_episode_num, date_next_episode)
+            api = ApiHelperTMDB()
+            show = api.get_show(api_id)
         return show
 
     @classmethod
@@ -34,19 +33,25 @@ class ShowController:
             next_episode_num, date_next_episode, the show object also has season_list, number_of_episodes,
             number_of_seasons attributes.
         """
-        show = cls.get_one_minimal_info(show_api_id, my_db)
-        #TODO call API
-        cls.update_show(my_db=my_db, show=show, season_list=season_list, number_of_episodes=number_of_episodes,
-                        number_of_seasons=number_of_seasons)
+        api = ApiHelperTMDB()
+        show = api.get_show(show_api_id)
+        ShowController.check_for_update(my_db, show)
         return show
 
+    @classmethod
+    def check_for_update(cls, my_db: MyDBConnection, show: Show):
+        if (datetime.now() - show.last_maj).seconds > 3600:
+            # the last update is too old, we update the show in API in DB.
+            updated_show = ApiHelperTMDB().get_show(show.api_id)
+            cls.update_show(my_db, show, updated_show.pict, updated_show.season_next_episode_num,
+                            updated_show.next_episode_num, updated_show.date_next_episode)
 
     @classmethod
     def list_all_seasons(cls, show: Show):
         return show.season_list
 
     @classmethod
-    def add_show(cls, my_db:MyDBConnection, title: str, pict: str, api_id: int, season_next_episode_num: int,
+    def add_show(cls, my_db: MyDBConnection, title: str, pict: str, api_id: int, season_next_episode_num: int,
                  next_episode_num: int, date_next_episode:datetime):
         show = Show.retrieve_show_from_bdd(api_id, my_db)
         if show is None:
