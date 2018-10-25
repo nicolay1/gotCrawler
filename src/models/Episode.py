@@ -1,6 +1,7 @@
 from typing import List
-from src.models.Actor import *
-from src.models.Author import *
+
+from src.models.Actor import Actor
+from src.models.Author import Author
 
 
 class Episode:
@@ -8,11 +9,11 @@ class Episode:
         This class represents an episode from a show, populated from the api
     """
 
-    def __init__(self, name: str, id_season: int, num_ep: int, summary: str, list_actor: List[Actor],
+    def __init__(self, name: str, num_season: int, num_ep: int, summary: str, list_actor: List[Actor],
                  list_author: List[Author]):
 
         self.__set_name(name)
-        self.__set_id_season(id_season)
+        self.__set_num_season(num_season)
         self.__set_num_ep(num_ep)
         self.__set_summary(summary)
         self.__set_list_actor(list_actor)
@@ -29,14 +30,14 @@ class Episode:
             self.__name = name
 
     @property
-    def id_season(self):
-        return self.__id_season
+    def num_season(self):
+        return self.__num_season
 
-    def __set_id_season(self, id_season: int):
-        if type(id_season) is not int:
+    def __set_num_season(self, num_season: int):
+        if type(num_season) is not int:
             raise TypeError("Season Id must be an integer")
         else:
-            self.__id_season = id_season
+            self.__num_season = num_season
 
     @property
     def num_ep(self):

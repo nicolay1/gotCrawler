@@ -5,9 +5,9 @@ class Actor(Person):
     """
         This class inherits of the Person class. Actor's objects have a picture (pict).
     """
-    def __init__(self, name: str, surname: str, pict: str):
-        Person.__init__(self, name, surname)
-        self.__set_pict( pict)
+    def __init__(self, name: str, pict: str):
+        Person.__init__(self, name)
+        self.__set_pict(pict)
 
     @property
     def pict(self):

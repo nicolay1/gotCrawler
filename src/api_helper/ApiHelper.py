@@ -81,7 +81,7 @@ class ApiHelper:
     def _api_json_to_show(self, show_json: Dict):
         raise NotImplementedError
 
-    def _api_json_to_season(self, season_json: Dict):
+    def _api_json_to_season(self, season_json: Dict, id_show:int):
         raise NotImplementedError
 
     def _api_json_to_episode(self, episode_json: Dict):
