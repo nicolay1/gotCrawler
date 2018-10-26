@@ -63,9 +63,9 @@ class MyDBConnection:
         cursor = self.__db_connexion.cursor()
         
         # we execute the query and fetch the result
-        print(query,args)
         if type(args) is int or type(args) is float:
-            args = (args,)
+            args = [args]
+        print((query,args))
         query_result = cursor.execute(query, args)
 
         # the commit make sure that all the precedent executed query have been
