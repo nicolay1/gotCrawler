@@ -95,7 +95,7 @@ class Notification:
 
     @staticmethod
     def get_notification_from_user(user: User, my_db: MyDBConnection):
-        if User is None:
+        if user is None:
             raise TypeError("The user from which we want to get notifications is not valid")
         else:
             list_notifications_res = my_db.exec_one("SELECT * from `notification` WHERE id_user = (?)", (user.id))
