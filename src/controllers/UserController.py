@@ -1,6 +1,9 @@
 from src.models.User import *
 from src.models.Show import *
 from src.models.Notification import *
+
+from src.db.MyDBConnection import MyDBConnection
+
 from src.controllers.NotificationController import *
 from src.controllers.ShowController import *
 
