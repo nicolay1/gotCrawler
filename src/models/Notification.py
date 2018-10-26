@@ -3,7 +3,6 @@ from src.db.MyDBConnection import MyDBConnection
 from src.models.User import User
 from src.models.Show import Show
 
-
 class Notification:
 
     """
@@ -11,15 +10,11 @@ class Notification:
     is getting close.
     """
 
-    def __init__(self, id_user: int, id_show: int, num_season: int, num_ep: int, date_ep: datetime=None,
-                 new_id: int=None, seen_flag: bool=False):
+    def __init__(self, id_user: int, id_show: int, new_id: int=None, seen_flag: bool=False):
                 self.__set_id(new_id)
                 self.__set_id_show(id_show)
                 self.__set_id_user(id_user)
                 self.__set_seen_flag(seen_flag)
-                self.__set_num_ep(num_ep)
-                self.__set_num_season(num_season)
-                self.__set_date_ep(date_ep)
 
     @property
     def id(self):
@@ -61,36 +56,6 @@ class Notification:
         else:
             self.__seen_flag = seen_flag
 
-    @property
-    def num_ep(self):
-        return self.__num_ep
-
-    def __set_num_ep(self, num_ep: int):
-        if type(num_ep) is not int:
-            raise TypeError("Episode number should be an integer")
-        else:
-            self.__num_ep = num_ep
-
-    @property
-    def num_season(self):
-        return self.__num_season
-
-    def __set_num_season(self, num_season: int):
-        if type(num_season) is not int:
-            raise TypeError("Episode number should be an integer")
-        else:
-            self.__num_season = num_season
-
-    @property
-    def date_ep(self):
-        return self.__date_ep
-
-    def __set_date_ep(self, date_ep: datetime):
-        if type(date_ep) is not datetime and date_ep is not None:
-            raise TypeError("Date of episode should be a datetime")
-        else:
-            self.__date_ep = date_ep
-
     def set_as_seen(self):
         if self.seen_flag == False:
             self.__set_seen_flag(True)
@@ -117,14 +82,7 @@ class Notification:
         id_user, id_show, seen_flag, new_id = notification_res[0]
         return Notification(id_user=id_user, id_show=id_show, seen_flag=seen_flag, new_id=new_id)
 
-    def update_notification_in_bdd(self, my_db: MyDBConnection, num_season: int = None, num_ep: int = None,
-                                   date_ep: datetime=None, seen_flag: bool=None):
-        if num_season is not None:
-            self.__set_num_season(num_season)
-        if num_ep is not None:
-            self.__set_num_ep(num_ep)
-        if date_ep is not None:
-            self.__set_date_ep(date_ep)
+    def update_notification_in_bdd(self, my_db: MyDBConnection, seen_flag: bool):
         if seen_flag is not None:
             self.__set_seen_flag(seen_flag)
         my_db.exec_one("UPDATE NOTIFICATION SET id_user=(?), id_show=(?), seen_flag=(?), WHERE id=(?)",
@@ -135,12 +93,16 @@ class Notification:
         my_db.exec_one("DELETE from `notification` WHERE `notification`.id = (?)", (self.id))
         del self
 
-    @classmethod
-    def get_notification_from_user(cls, user: User, my_db: MyDBConnection):
+    @staticmethod
+    def get_notification_from_user(user: User, my_db: MyDBConnection):
         if user is None:
             raise TypeError("The user from which we want to get notifications is not valid")
         else:
-            list_notifications = my_db.exec_one("SELECT * from `notification` WHERE id_user = (?)", (user.id))
+            list_notifications_res = my_db.exec_one("SELECT * from `notification` WHERE id_user = (?)", (user.id))
+            list_notifications = []
+            for notification in list_notifications_res:
+                id_user, id_show, seen_flag, _ = notification
+                list_notifications.append(Notification(id_user, id_show, seen_flag))
             return list_notifications
 
 
@@ -151,3 +113,11 @@ class Notification:
         else:
             list_notifications = my_db.exec_one("SELECT * from `notification` WHERE id_show = (?)", (show.db_id))
             return list_notifications
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "id_show": self.id_show,
+            "id_user": self.id_user,
+            "seen_flag": self.seen_flag
+        }

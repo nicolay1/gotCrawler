@@ -128,6 +128,14 @@ class User:
         del self
 
     @classmethod
+    def retrieve_user_from_id(cls, user_id: int, my_db: MyDBConnection):
+        user_res = my_db.exec_one("SELECT * from `user` WHERE id = (?)", (user_id))
+        if not user_res:
+            return None
+        firstname, surname, login, pwd, poster, user_id = user_res[0]
+        return User(firstname, surname, login, pwd, poster, new_id=user_id)
+
+    @classmethod
     def retrieve_user_from_credentials(cls, login: str, pwd: str, my_db: MyDBConnection):
         user_res = my_db.exec_one(
             "SELECT * from `user` WHERE login = (?) AND pwd = (?)", (login, pwd))
@@ -140,3 +148,12 @@ class User:
         return """id:{}, firstname:{}, surname:{}, login:{}, poster:{}""".format(
             self.id, self.firstname, self.surname, self.login, self.poster
         )
+    
+    def to_json(self):
+        return {
+            "id": self.id,
+            "firstname": self.firstname,
+            "surname": self.surname,
+            "login": self.login,
+            "poster": self.poster
+        }
