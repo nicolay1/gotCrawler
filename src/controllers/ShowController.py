@@ -1,7 +1,7 @@
 from src.models.Show import *
 from src.db.MyDBConnection import MyDBConnection
-from src.models.Notification import *
-from src.controllers.NotificationController import *
+from src.models.Notification import Notification
+from src.controllers.NotificationController import NotificationController
 
 class ShowController:
     """
