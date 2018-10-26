@@ -2,7 +2,7 @@
 from src.models.Season import Season
 from typing import List
 from datetime import datetime
-from db.MyDBConnection import MyDBConnection
+from src.db.MyDBConnection import MyDBConnection
 
 class Show:
     """

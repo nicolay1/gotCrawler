@@ -135,12 +135,16 @@ class Notification:
         my_db.exec_one("DELETE from `notification` WHERE `notification`.id = (?)", (self.id))
         del self
 
-    @classmethod
-    def get_notification_from_user(cls, user: User, my_db: MyDBConnection):
-        if user is None:
+    @staticmethod
+    def get_notification_from_user(user: User, my_db: MyDBConnection):
+        if User is None:
             raise TypeError("The user from which we want to get notifications is not valid")
         else:
-            list_notifications = my_db.exec_one("SELECT * from `notification` WHERE id_user = (?)", (user.id))
+            list_notifications_res = my_db.exec_one("SELECT * from `notification` WHERE id_user = (?)", (user.id))
+            list_notifications = []
+            for notification in list_notifications_res:
+                id_user, id_show, seen_flag, _ = notification
+                list_notifications.append(Notification(id_user, id_show, seen_flag))
             return list_notifications
 
 
