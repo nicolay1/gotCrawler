@@ -32,21 +32,22 @@ class UserController:
                                 list_preferences=list_preferences)
 
     @classmethod
-    def del_user(cls, user: User,my_db:MyDBConnection):
+    def del_user(cls, user: User, my_db: MyDBConnection):
         user.delete_user_in_bdd(my_db=my_db)
 
     @classmethod
-    def get_user_notification(cls, user: User):
-        Notification.get_notification_from_user(user)
+    def get_user_notification(cls, user: User, my_db: MyDBConnection):
+        Notification.get_notification_from_user(user, my_db)
 
     @classmethod
-    def add_preference_to_user(cls,user:User, api_id:int, my_db):
-        show=ShowController.get_one_minimal_info(api_id,my_db)
+    def add_preference_to_user(cls, user: User, api_id: int, my_db: MyDBConnection):
+        show = ShowController.get_one_minimal_info(api_id, my_db)
         if show.id is None:
-            ShowController.add_show(my_db,show.title,show.pict,show.api_id,show.season_next_episode_num, show.next_episode_num, show.date_next_episode)
-        NotificationController.add_notification(user,show,seen_flag=False)
+            ShowController.add_show(my_db, show.title, show.pict, show.api_id, show.season_next_episode_num,
+                                    show.next_episode_num, show.date_next_episode)
+        NotificationController.add_notification(my_db, user, show, seen_flag=False)
 
     @classmethod
-    def delete_user_preference(cls,user:User,show:Show,my_db : MyDBConnection):
-        notification=NotificationController.get_one(user,show, my_db)
-        NotificationController.delete_notification(notification,my_db)
+    def delete_user_preference(cls, user: User, show: Show, my_db: MyDBConnection):
+        notification = NotificationController.get_one(my_db, user, show)
+        NotificationController.delete_notification(my_db, notification)
