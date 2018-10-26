@@ -33,6 +33,7 @@ class MyDBConnection:
             # just checking that the query is a string
             if type(query) is not str :
                 raise TypeError("query param is not a str")
+            print(query)
             
             # we execute the query and fetch the result, for now, we do not
             # catch error waiting for an error handler.
