@@ -7,8 +7,8 @@ class Season:
         This class represents a season of a show, populated from api
     """
 
-    def __init__(self, id_show: int, num_season: int, list_episodes: List[Episode], name: str, poster: str,
-                 overview: str):
+    def __init__(self, id_show: int, num_season: int, name: str, poster: str,
+                 overview: str, list_episodes: List[Episode]=None):
         self.__set_id_show(id_show)
         self.__set_num_season(num_season)
         self.__set_list_episodes(list_episodes)
@@ -41,7 +41,7 @@ class Season:
         return self.__list_episodes
 
     def __set_list_episodes(self, list_episodes: List[Episode]):
-        if type(list_episodes) is not List[Episode]:
+        if type(list_episodes) is not List[Episode] and list_episodes is not None:
             raise TypeError("Episodes list must be a list of episodes")
         else:
             self.__list_episodes = list_episodes

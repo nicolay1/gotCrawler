@@ -27,19 +27,19 @@ class ApiHelperTMDB(ApiHelper):
 
     def get_show(self, show_id: int):
         json = self._get("tv/{}", (show_id))
-        self._api_json_to_show(json)
+        return self._api_json_to_show(json)
 
     def get_season(self, show_id: int, season_number: int):
         json = self._get("tv/{}/season/{}", (show_id, season_number))
-        self._api_json_to_season(json, show_id)
+        return self._api_json_to_season(json, show_id)
 
     def get_episode(self, show_id: int, season_number: int, episode_number: int):
         json = self._get("tv/{}/season/{}/episode/{}", (show_id, season_number, episode_number))
-        self._api_json_to_episode(json)
+        return self._api_json_to_episode(json)
 
     def get_search(self, query: str):
         json = self._get("search/tv", None, {"query": query})
-        self._api_json_search_to_show_list()
+        return self._api_json_search_to_show_list()
 
     def _api_json_search_to_show_list(self, result_json: Dict):
         show_list = []
@@ -66,12 +66,19 @@ class ApiHelperTMDB(ApiHelper):
         db_id = None
         number_of_episodes = show_json["number_of_episodes"]
         number_of_seasons = show_json["number_of_seasons"]
-        season_list = None
         overview = show_json["overview"]
+        list_season = []
+        for season_json in show_json["seasons"]:
+            num_season = season_json["season_number"]
+            name = season_json["name"]
+            overview = season_json["overview"]
+            poster = season_json["poster_path"]
+            season = Season(api_id, num_season, name, poster, overview, None)
+            list_season.append(season)
 
         show = Show(title=title, pict=pict, api_id=api_id, season_next_episode_num=season_next_episode_num,
                     next_episode_num=next_episode_num, date_next_episode=date_next_episode,
-                    last_maj=last_maj, db_id=db_id, season_list=season_list, number_of_episodes=number_of_episodes,
+                    last_maj=last_maj, db_id=db_id, season_list=list_season, number_of_episodes=number_of_episodes,
                     number_of_seasons=number_of_seasons, overview=overview)
         return show
 
