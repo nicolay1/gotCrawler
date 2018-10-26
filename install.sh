@@ -1,11 +1,5 @@
 echo "Installing virtual environment and requirements."
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
-    sudo apt-get install python3-venv
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-    echo "Python3-venv should be on your machine, if there is an issue, please install it."
-else
-    echo "Please use MACOS or Linux, you may refer to README.md"
-fi
+sudo apt-get install python3-venv
 python3 -m venv venv
 . venv/bin/activate
 pip install --upgrade pip

@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS notification (
 );
 -- populate notification
 INSERT INTO notification (id, id_user, id_show, seen_flag) VALUES 
-(1,1,1,FALSE),(2,1,2,FALSE),(3,2,1,FALSE),(4,3,1,FALSE);
+(1,1,1,0),(2,1,2,0),(3,2,1,0),(4,3,1,0);
 
 CREATE TABLE IF NOT EXISTS user (
     surname VARCHAR(255),

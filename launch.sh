@@ -1,3 +1,3 @@
-source venv/bin/activate
+. venv/bin/activate
 python main.py
 deactivate
