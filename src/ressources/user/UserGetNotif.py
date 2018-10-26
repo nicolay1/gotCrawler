@@ -11,4 +11,4 @@ class UserGetNotif(Resource):
         my_db = MyDBConnection("db/gotCrawler.db")
         user = UserController.get_one_from_id(user_id, my_db)
         notifs = UserController.get_user_notification(user, my_db)
-        return [notif.to_json for notif in notifs]
+        return [notif.to_json() for notif in notifs]
