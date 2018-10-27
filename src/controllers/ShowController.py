@@ -1,7 +1,7 @@
 from src.models.Show import *
 from src.db.MyDBConnection import MyDBConnection
-from src.models.Notification import Notification
-from src.controllers.NotificationController import NotificationController
+from src.models.Preference import Preference
+from src.controllers.PreferenceController import PreferenceController
 from src.api_helper.ApiHelperTMDB import ApiHelperTMDB
 
 class ShowController:
@@ -67,9 +67,9 @@ class ShowController:
                          next_episode_num=next_episode_num, date_next_episode=date_next_episode,
                          season_list=season_list, number_of_episodes=number_of_episodes,
                          number_of_seasons=number_of_seasons)
-        for notification in Notification.get_notification_from_show(show, my_db):
+        for preference in Preference.get_preference_from_show(show, my_db):
             new_seen_flag = False
-            if (notification.seen_flag or show.next_episode_num != notification.num_ep
-                    or show.date_next_episode != notification.date_ep):
+            if (preference.seen_flag or show.next_episode_num != preference.num_ep
+                    or show.date_next_episode != preference.date_ep):
                 new_seen_flag = True
-            NotificationController.update_notification(my_db, notification, show, seen_flag=new_seen_flag)
+            PreferenceController.update_preference(my_db, preference, show, seen_flag=new_seen_flag)
