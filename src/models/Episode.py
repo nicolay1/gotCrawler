@@ -78,3 +78,13 @@ class Episode:
             raise TypeError("Author's list should be a list")
         else:
             self.__list_author = list_author
+
+    def to_json(self):
+        return {
+            "name": self.name,
+            "num_season": self.num_season,
+            "num_ep": self.num_ep,
+            "summary": self.summary,
+            "list_actor": self.list_actor,
+            'list_author': self.list_author
+        }
