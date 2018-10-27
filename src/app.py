@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restful import Resource, Api
 
-from src.ressources import UserGet, UserAdd, UserGetNotif
+from src.ressources import UserGet, UserAdd, UserGetNotif, ShowGet
 
 class GotCrawlerApp:
     """
@@ -15,6 +15,7 @@ class GotCrawlerApp:
         self.api.add_resource(UserGet, '/user/<user_id>')
         self.api.add_resource(UserAdd, '/user')
         self.api.add_resource(UserGetNotif, '/user/<user_id>/pref')
+        self.api.add_resource(ShowGet, '/show/<api_id>')
 
     def start(self):
         self._initialize()
