@@ -11,7 +11,7 @@ from datetime import date
 
 class ShowPreferences:
     """
-        Deal with preference which is a join of a Preference and a Preference,
+        Deal with preference which is a join of a Preference and a Show,
         actually just add the "seen_flag" to the Preference.
     """
 
