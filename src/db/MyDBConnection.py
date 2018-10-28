@@ -33,6 +33,7 @@ class MyDBConnection:
             # just checking that the query is a string
             if type(query) is not str :
                 raise TypeError("query param is not a str")
+            print(query)
             
             # we execute the query and fetch the result, for now, we do not
             # catch error waiting for an error handler.
@@ -63,9 +64,9 @@ class MyDBConnection:
         cursor = self.__db_connexion.cursor()
         
         # we execute the query and fetch the result
-        print(query,args)
         if type(args) is int or type(args) is float:
-            args = (args,)
+            args = [args]
+        print((query,args))
         query_result = cursor.execute(query, args)
 
         # the commit make sure that all the precedent executed query have been

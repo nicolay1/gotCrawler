@@ -1,3 +1,3 @@
-source venv/bin/activate
-echo "Waiting for flask sooooo hard <3"
+. venv/bin/activate
+python main.py
 deactivate

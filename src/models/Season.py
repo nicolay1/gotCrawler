@@ -75,3 +75,13 @@ class Season:
             raise TypeError("Season overview must be string")
         else:
             self.__overview = overview
+
+    def to_json(self):
+        return {
+            "id_show": self.id_show,
+            "num_season": self.num_season,
+            "list_episodes": self.list_episodes,
+            "name": self.name,
+            "poster": self.poster,
+            "overview": self.overview
+        }

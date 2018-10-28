@@ -2,7 +2,7 @@
 from src.models.Season import Season
 from typing import List
 from datetime import datetime
-from db.MyDBConnection import MyDBConnection
+from src.db.MyDBConnection import MyDBConnection
 
 
 class Show:
@@ -207,3 +207,18 @@ class Show:
             return None
         pict, last_maj, title, season_next_episode_num, next_episode_date, next_episode_num, api_id, id = show_res[0]
         return Show(title, pict, api_id, season_next_episode_num, next_episode_num, next_episode_date, last_maj, id)
+
+    def to_json(self):
+        return {
+            "title": self.title,
+            "pict": self.pict,
+            "api_id": self.api_id,
+            "season_next_episode_num": self.season_next_episode_num,
+            "next_episode_num": self.next_episode_num,
+            "date_next_episode": self.date_next_episode,
+            "last_maj": self.last_maj,
+            "db_id": self.db_id,
+            "season_list": self.season_list,
+            "number_of_episodes": self.number_of_episodes,
+            "number_of_seasons": self.number_of_seasons
+        }
