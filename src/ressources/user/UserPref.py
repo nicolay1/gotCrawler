@@ -6,7 +6,7 @@ from src.db.MyDBConnection import MyDBConnection
 
 class UserGetPref(Resource):
     """
-        Get a user
+        Get a user preferences
     """
     def get(self, user_id):
         my_db = MyDBConnection("db/gotCrawler.db")

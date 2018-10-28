@@ -59,7 +59,7 @@ class UserController:
         if show.id is None:
             ShowController.add_show(my_db, show.title, show.pict, show.api_id, show.season_next_episode_num,
                                     show.next_episode_num, show.date_next_episode)
-        PreferenceController.add_preference(my_db, user, show, seen_flag=False)
+        PreferenceController.add_preference(my_db, user, show, seen_flag=0)
 
     @staticmethod
     def delete_user_preference(user: User, show: Show, my_db: MyDBConnection):

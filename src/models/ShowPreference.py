@@ -100,7 +100,7 @@ class ShowPreferences:
     @classmethod
     def get_show_preferences_from_user(cls, user: User, my_db: MyDBConnection):
         show_pref_db_res = my_db.exec_one("""
-            SELECT $rows FROM show 
+            SELECT $cols FROM show 
                 JOIN preference 
             WHERE preference.id_user = (?)""",
                        args=(user.id,),

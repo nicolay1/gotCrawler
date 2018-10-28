@@ -18,4 +18,4 @@ class GotCrawlerApp:
 
     def start(self):
         self._initialize()
-        self.app.run(debug=True)
+        self.app.run(debug=1)

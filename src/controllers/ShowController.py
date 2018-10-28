@@ -68,8 +68,8 @@ class ShowController:
                          season_list=season_list, number_of_episodes=number_of_episodes,
                          number_of_seasons=number_of_seasons)
         for preference in Preference.get_preference_from_show(show, my_db):
-            new_seen_flag = False
+            new_seen_flag = 0
             if (preference.seen_flag or show.next_episode_num != preference.num_ep
                     or show.date_next_episode != preference.date_ep):
-                new_seen_flag = True
+                new_seen_flag = 1
             PreferenceController.update_preference(my_db, preference, show, seen_flag=new_seen_flag)

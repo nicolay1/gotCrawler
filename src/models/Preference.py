@@ -10,7 +10,7 @@ class Preference:
     is getting close.
     """
 
-    def __init__(self, id_user: int, id_show: int, new_id: int=None, seen_flag: int=False):
+    def __init__(self, id_user: int, id_show: int, new_id: int=None, seen_flag: int=0):
                 self.__set_id(new_id)
                 self.__set_id_show(id_show)
                 self.__set_id_user(id_user)
@@ -52,17 +52,17 @@ class Preference:
 
     def __set_seen_flag(self, seen_flag: int):
         if type(seen_flag) is not int:
-            raise TypeError("Seen flag should be a intean")
+            raise TypeError("Seen flag should be a integer")
         else:
             self.__seen_flag = seen_flag
 
     def set_as_seen(self):
-        if self.seen_flag == False:
-            self.__set_seen_flag(True)
+        if self.seen_flag == 0:
+            self.__set_seen_flag(1)
 
     def set_as_not_seen(self):
-        if self.seen_flag == True:
-            self.__set_seen_flag(False)
+        if self.seen_flag == 1:
+            self.__set_seen_flag(0)
 
     def create_preference_in_bdd(self, my_db: MyDBConnection):
         my_db.exec_one("""

@@ -72,7 +72,7 @@ class MyDBConnection:
 
         # if selected rows is provided we concatenate them in the query
         if selected_rows:
-            if not '$rows' in query:
+            if not '$cols' in query:
                 print("Warning, selected_rows provided but no $ detected")
             query = query.replace('$rows', ', '.join(selected_rows), 1)
         
