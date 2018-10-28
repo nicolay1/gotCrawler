@@ -35,9 +35,13 @@ class ShowController:
             number_of_seasons attributes.
         """
         api = ApiHelperTMDB()
-        show = api.get_show(show_api_id)
-        ShowController.check_for_update(my_db, show)
-        return show
+        api_show = api.get_show(show_api_id)
+        # if the show is in database, we retrieve the db_id and update the show
+        db_show = Show.retrieve_show_from_bdd(api_show.api_id, my_db)
+        if db_show is not None:
+            ShowController.check_for_update(my_db, db_show)
+            api_show.db_id = db_show.db_id
+        return api_show
 
     @classmethod
     def check_for_update(cls, my_db: MyDBConnection, show: Show):
