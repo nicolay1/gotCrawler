@@ -4,6 +4,7 @@ from typing import List
 from datetime import datetime
 from src.db.MyDBConnection import MyDBConnection
 
+
 class Show:
     """
         The Show class represents a show.
@@ -16,18 +17,20 @@ class Show:
         db_id (id in the database), season_list (list of seasons), number_of_seasons and number_of_episodes are not
         mandatory.
     """
+
     def __init__(self,
                  title: str,
                  pict: str,
                  api_id: int,
-                 season_next_episode_num: int,
-                 next_episode_num: int,
-                 date_next_episode: datetime,
-                 last_maj: datetime,
+                 season_next_episode_num: int = None,
+                 next_episode_num: int = None,
+                 date_next_episode: datetime = None,
+                 last_maj: datetime = datetime.now(),
                  db_id: int = None,
                  season_list: List[Season] = None,
                  number_of_episodes: int = None,
-                 number_of_seasons: int = None):
+                 number_of_seasons: int = None,
+                 overview: str = None):
 
         self.__set_title(title)
         self.__set_pict(pict)
@@ -40,7 +43,8 @@ class Show:
         self.__set_season_list(season_list)
         self.__set_number_of_episodes(number_of_episodes)
         self.__set_number_of_seasons(number_of_seasons)
-        
+        self.__set_overview(overview)
+
     @property
     def title(self):
         return self.__title
@@ -50,7 +54,7 @@ class Show:
             raise TypeError("Title should be a string")
         else:
             self.__title = title
-    
+
     @property
     def pict(self):
         return self.__pict
@@ -151,6 +155,16 @@ class Show:
         else:
             self.__number_of_seasons = number_of_seasons
 
+    @property
+    def overview(self):
+        return self.__overview
+
+    def __set_overview(self, overview: str):
+        if type(overview) is not str and overview is not None:
+            raise TypeError("The overview should be a string")
+        else:
+            self.__overview = overview
+
     def create_show_in_bdd(self, my_db: MyDBConnection):
         my_db.exec_one("""
         INSERT INTO show (pict, last_maj, title, season_next_episode, next_episode_date, next_episode_num, api_id) 
@@ -160,7 +174,6 @@ class Show:
         ))
         new_show = Show.retrieve_show_from_bdd(self.api_id, my_db)
         self.__set_db_id(new_show.db_id)
-
 
     def update_show(self, my_db: MyDBConnection, pict: str = None, season_next_episode_num: int = None,
                     next_episode_num: int = None, date_next_episode: datetime = None, season_list: List[Season] = None,
@@ -182,10 +195,10 @@ class Show:
             self.__set_number_of_seasons(number_of_seasons)
         my_db.exec_one("UPDATE SHOW SET pict=(?), last_maj=(?), season_next_episode=(?), next_episode_date=(?), "
                        "next_episode_num=(?), WHERE api_id=(?)",
-            (self.pict, self.last_maj, self.season_next_episode_num, self.date_next_episode, self.next_episode_num,
-             self.api_id)
-        )
-
+                       (self.pict, self.last_maj, self.season_next_episode_num, self.date_next_episode,
+                        self.next_episode_num,
+                        self.api_id)
+                       )
 
     @classmethod
     def retrieve_show_from_bdd(cls, api_id: int, my_db: MyDBConnection):
