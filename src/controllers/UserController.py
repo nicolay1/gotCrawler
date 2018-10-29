@@ -1,12 +1,14 @@
-from src.models.User import *
-from src.models.Show import *
-from src.models.Notification import *
+from typing import List
+
+from src.models.User import User
+from src.models.Show import Show
+from src.models.Preference import Preference
+from src.models.ShowPreference import ShowPreferences
 
 from src.db.MyDBConnection import MyDBConnection
 
-from src.controllers.NotificationController import *
-from src.controllers.ShowController import *
-
+from .PreferenceController import PreferenceController
+from .ShowController import ShowController
 
 class UserController:
     """
@@ -44,8 +46,12 @@ class UserController:
         user.delete_user_in_bdd(my_db=my_db)
 
     @staticmethod
-    def get_user_notification(user: User, my_db: MyDBConnection):
-        return Notification.get_notification_from_user(user, my_db)
+    def get_user_preference(user: User, my_db: MyDBConnection):
+        return Preference.get_preference_from_user(user, my_db)
+    
+    @staticmethod
+    def get_user_show_preferences(user: User, my_db: MyDBConnection):
+        return ShowPreferences.get_show_preferences_from_user(user, my_db)
 
     @staticmethod
     def add_preference_to_user(user: User, api_id: int, my_db: MyDBConnection):
@@ -53,9 +59,9 @@ class UserController:
         if show.id is None:
             ShowController.add_show(my_db, show.title, show.pict, show.api_id, show.season_next_episode_num,
                                     show.next_episode_num, show.date_next_episode)
-        NotificationController.add_notification(my_db, user, show, seen_flag=False)
+        PreferenceController.add_preference(my_db, user, show, seen_flag=0)
 
     @staticmethod
     def delete_user_preference(user: User, show: Show, my_db: MyDBConnection):
-        notification = NotificationController.get_one(my_db, user, show)
-        NotificationController.delete_notification(my_db, notification)
+        preference = PreferenceController.get_one(my_db, user, show)
+        PreferenceController.delete_preference(my_db, preference)

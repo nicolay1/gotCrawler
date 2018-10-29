@@ -1,7 +1,7 @@
 from src.models.Show import *
 from src.db.MyDBConnection import MyDBConnection
-from src.models.Notification import Notification
-from src.controllers.NotificationController import NotificationController
+from src.models.Preference import Preference
+from src.controllers.PreferenceController import PreferenceController
 from src.api_helper.ApiHelperTMDB import ApiHelperTMDB
 
 class ShowController:
@@ -64,19 +64,19 @@ class ShowController:
 
     @classmethod
     def update_show(cls, my_db: MyDBConnection, show_db: Show, show_api: Show):
-        new_seen_flag = True
+        new_seen_flag = 1
         # we check if any changes occurred concerning next episode
         if (show_db.next_episode_num != show_api.next_episode_num
                 or show_db.date_next_episode != show_api.date_next_episode):
-            new_seen_flag = False
+            new_seen_flag = 0
         # update of the show
         show_db.update_show(my_db=my_db, pict=show_api.pict, season_next_episode_num=show_api.season_next_episode_num,
                             next_episode_num=show_api.next_episode_num, date_next_episode=show_api.date_next_episode,
                             season_list=show_api.season_list, number_of_episodes=show_api.number_of_episodes,
                             number_of_seasons=show_api.number_of_seasons)
-        # update of each notification linked to the show
-        for notification in Notification.get_notification_from_show(show_db, my_db):
-            if not notification.seen_flag or not new_seen_flag:
-                # if the notification is unseen or if a change concerning next episode occurred, seen_flag at False
-                new_seen_flag = False
-            NotificationController.update_notification(my_db, notification, show_db, seen_flag=new_seen_flag)
+        # update of each preference linked to the show
+        for preference in Preference.get_preference_from_show(show_db, my_db):
+            if not preference.seen_flag or not new_seen_flag:
+                # if the preference is unseen or if a change concerning next episode occurred, seen_flag at False
+                new_seen_flag = 0
+            PreferenceController.update_preference(my_db, preference, show_db, seen_flag=new_seen_flag)

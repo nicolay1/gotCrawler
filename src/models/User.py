@@ -132,6 +132,7 @@ class User:
         user_res = my_db.exec_one("SELECT * from `user` WHERE id = (?)", (user_id))
         if not user_res:
             return None
+        print(user_res)
         firstname, surname, login, pwd, poster, user_id = user_res[0]
         return User(firstname, surname, login, pwd, poster, new_id=user_id)
 
