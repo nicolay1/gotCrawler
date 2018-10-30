@@ -2,7 +2,10 @@
 from src.models.Season import Season
 from typing import List
 from datetime import datetime
+
 from src.db.MyDBConnection import MyDBConnection
+
+from src.helper import str_to_datetime
 
 
 class Show:
@@ -77,7 +80,7 @@ class Show:
 
     @property
     def season_next_episode_num(self):
-        return self.season_next_episode_num
+        return self.__season_next_episode_num
 
     def __set_season_next_episode_num(self, season_next_episode_num: int):
         if type(season_next_episode_num) is not int and season_next_episode_num is not None:
@@ -205,8 +208,9 @@ class Show:
         show_res = my_db.exec_one("SELECT * from `show` WHERE api_id = (?)", (api_id))
         if not show_res:
             return None
-        pict, last_maj, title, season_next_episode_num, next_episode_date, next_episode_num, api_id, id = show_res[0]
-        return Show(title, pict, api_id, season_next_episode_num, next_episode_num, next_episode_date, last_maj, id)
+        pict, last_maj, title, season_next_episode_num, next_episode_date, next_episode_num, api_id, db_id = show_res[0]
+        
+        return Show(title, pict, api_id, season_next_episode_num, next_episode_num, str_to_datetime(next_episode_date), str_to_datetime(last_maj), db_id)
 
     def to_json(self):
         return {

@@ -56,7 +56,7 @@ class UserController:
     @staticmethod
     def add_preference_to_user(user: User, api_id: int, my_db: MyDBConnection):
         show = ShowController.get_one_minimal_info(api_id, my_db)
-        if show.id is None:
+        if show is None:
             ShowController.add_show(my_db, show.title, show.pict, show.api_id, show.season_next_episode_num,
                                     show.next_episode_num, show.date_next_episode)
         PreferenceController.add_preference(my_db, user, show, seen_flag=0)

@@ -11,7 +11,6 @@ class UserAdd(Resource):
     def post(self):
         my_db = MyDBConnection("db/gotCrawler.db")
         posted_data = request.get_json()
-        print(posted_data)
         UserController.add_user(
             posted_data["firstname"],
             posted_data["surname"],
@@ -19,4 +18,4 @@ class UserAdd(Resource):
             posted_data["pwd"],
             posted_data["poster"],
             my_db)
-        return 200
+        return "ok"

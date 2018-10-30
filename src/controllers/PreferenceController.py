@@ -9,15 +9,15 @@ class PreferenceController:
         This controller manage the Preference model, create preferences when needed.
     """
     @staticmethod
-    def get_one(my_db: MyDBConnection, user: User, show: Show):
-        preference = Preference.retrieve_preference_from_bdd(my_db=my_db, id_user=user.id, id_show=show.db_id)
+    def get_one_w_api_id(my_db: MyDBConnection, user: User, show: Show):
+        preference = Preference.retrieve_preference_from_bdd(my_db=my_db, id_user=user.id, id_show=show.api_id)
         return preference
 
     @staticmethod
     def add_preference(my_db: MyDBConnection, user: User, show: Show, seen_flag: int):
-        preference = Preference.retrieve_preference_from_bdd(my_db=my_db, id_user=user.id, id_show=show.db_id)
+        preference = Preference.retrieve_preference_from_bdd(my_db=my_db, id_user=user.id, id_show=show.api_id)
         if preference is None:
-            preference = Preference(id_user=user.id, id_show=show.db_id, seen_flag=seen_flag)
+            preference = Preference(id_user=user.id, id_show=show.api_id, seen_flag=seen_flag)
             preference.create_preference_in_bdd(my_db)
 
     @classmethod
@@ -26,4 +26,7 @@ class PreferenceController:
 
     @staticmethod
     def delete_preference(my_db: MyDBConnection, preference: Preference):
-        preference.delete_preference_in_bdd(my_db=my_db)
+        if preference is not None:
+            preference.delete_preference_in_bdd(my_db=my_db)
+        else:
+            raise ValueError("Preference you're trying to delete does not exist.")

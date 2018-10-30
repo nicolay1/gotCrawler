@@ -1,4 +1,5 @@
 from datetime import *
+from flask import jsonify
 
 from src.db.MyDBConnection import MyDBConnection
 
@@ -101,22 +102,18 @@ class ShowPreferences:
     def get_show_preferences_from_user(cls, user: User, my_db: MyDBConnection):
         show_pref_db_res = my_db.exec_one("""
             SELECT $cols FROM show 
-                JOIN preference 
+                JOIN preference ON preference.id_show = show.api_id
             WHERE preference.id_user = (?)""",
                        args=(user.id),
                        selected_rows=cls.__db_rows,
                        rows_as_objects=True
                        )
         
-        if not show_pref_db_res:
-            return None
-        
         show_preferences = []
         # we force the order in a way that the DB result has the perfect shape
         # for creating the object (with selected_rows).
         for row in show_pref_db_res:
             pop_args = [row[row_name] for row_name in ShowPreferences.__db_rows]
-            print(pop_args, row)
             show_preferences.append(cls(*pop_args))
 
         return show_preferences
