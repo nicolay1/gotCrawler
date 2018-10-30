@@ -36,12 +36,22 @@ class ShowController:
         """
         api = ApiHelperTMDB()
         api_show = api.get_show(show_api_id)
+
         # if the show is in database, we retrieve the db_id and update the show
         db_show = Show.retrieve_show_from_bdd(api_show.api_id, my_db)
         if db_show is not None:
             ShowController.check_for_update(my_db, db_show)
             api_show.db_id = db_show.db_id
         return api_show
+
+    @staticmethod
+    def get_on_from_db_w_api_id(my_db: MyDBConnection, show_api_id: int):
+        """
+            This method retrieve show from bdd with the api_id 
+        """
+        db_show = Show.retrieve_show_from_bdd(show_api_id, my_db)
+        # may be None if no db_show found
+        return db_show
 
     @classmethod
     def check_for_update(cls, my_db: MyDBConnection, show: Show):

@@ -6,11 +6,11 @@ from src.models.Show import Show
 class Preference:
 
     """
-    This class represents the preference that the user receive when the date of one of his favorite show next episode
-    is getting close.
+        This class represents the preference that the user receive when the date of one of his favorite show next episode
+        is getting close.
     """
 
-    def __init__(self, id_user: int, id_show: int, new_id: int=None, seen_flag: int=0):
+    def __init__(self, id_user: int, id_show: int, new_id: int = None, seen_flag: int = 0):
                 self.__set_id(new_id)
                 self.__set_id_show(id_show)
                 self.__set_id_user(id_user)
@@ -70,8 +70,8 @@ class Preference:
                 ((?), (?), (?))""", (
             self.id_user, self.id_show, self.seen_flag
         ))
-        new_notif = Preference.retrieve_preference_from_bdd(my_db, self.id_user, self.id_show)
-        self.__set_id(new_notif.id)
+        new_pref = Preference.retrieve_preference_from_bdd(my_db, self.id_user, self.id_show)
+        self.__set_id(new_pref.id)
 
     @classmethod
     def retrieve_preference_from_bdd(cls, my_db: MyDBConnection, id_user: int, id_show: int):

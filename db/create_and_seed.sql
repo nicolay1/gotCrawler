@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS `show` (
     pict VARCHAR(1024),
-    last_maj DATETIME CURRENT_TIMESTAMP,
+    last_maj DATETIME DEFAULT CURRENT_TIMESTAMP,
     title VARCHAR(255),
     season_next_episode_num INT,
     next_episode_date DATETIME,
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS preference (
 );
 -- populate preference
 INSERT INTO preference (id, id_user, id_show, seen_flag) VALUES 
-(1,1,1,0),(2,1,2,0),(3,2,1,0),(4,3,1,0);
+(1,1,452522,0),(2,1,1399,0),(3,2,1399,0),(4,3,452522,0);
 
 CREATE TABLE IF NOT EXISTS user (
     surname VARCHAR(255),
