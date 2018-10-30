@@ -1,5 +1,7 @@
 from flask import Flask
 from flask_restful import Resource, Api
+from flask_cors import CORS
+
 from src.ressources import UserGet, UserAdd, UserPref, SeasonGet, EpisodeGet, ShowGet, ShowSearch
 
 
@@ -9,6 +11,7 @@ class GotCrawlerApp:
     """
     def __init__(self):
         self.app = Flask(__name__)
+        CORS(self.app)
         self.api = Api(self.app)
 
     def _initialize(self):
