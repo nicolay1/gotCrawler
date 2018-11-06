@@ -171,8 +171,8 @@ class Show:
 
     def create_show_in_bdd(self, my_db: MyDBConnection):
         my_db.exec_one("""
-        INSERT INTO show (pict, last_maj, title, season_next_episode, next_episode_date, next_episode_num, api_id) 
-        VALUES ((?), (?), (?), (?), (?), (?), (?), (?))""", (
+        INSERT INTO show (pict, last_maj, title, season_next_episode_num, next_episode_date, next_episode_num, api_id) 
+        VALUES ((?), (?), (?), (?), (?), (?), (?))""", (
             self.pict, self.last_maj, self.title, self.season_next_episode_num, self.date_next_episode,
             self.next_episode_num, self.api_id
         ))

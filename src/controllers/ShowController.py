@@ -10,7 +10,7 @@ class ShowController:
     """
 
     @classmethod
-    def get_one_minimal_info(cls, api_id: int, my_db: MyDBConnection):
+    def get_one_minimal_info(cls, api_id: int, my_db: MyDBConnection) -> Show:
         """
             This method creates a show object with attributes title, pict, api_id, season_next_episode_num,
             next_episode_num, date_next_episode. If the show already exists in the database, the object is created from
@@ -45,11 +45,15 @@ class ShowController:
         return api_show
 
     @staticmethod
-    def get_on_from_db_w_api_id(my_db: MyDBConnection, show_api_id: int):
+    def get_or_create_from_db_w_api_id(my_db: MyDBConnection, show_api_id: int):
         """
-            This method retrieve show from bdd with the api_id 
+            This method retrieve show from bdd with the api_id and create it if
+            it does not exist, finally, it return the image of the showfrom the db.
         """
         db_show = Show.retrieve_show_from_bdd(show_api_id, my_db)
+        if db_show is None:
+            db_show = ShowController.get_one_minimal_info(show_api_id, my_db)
+            db_show.create_show_in_bdd(my_db)
         # may be None if no db_show found
         return db_show
 
