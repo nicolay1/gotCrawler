@@ -6,16 +6,23 @@
         <AuthorList
                 :authors= author_list>
         </AuthorList>
+        <div>
+            <SearchBar/>
+        </div>
     </div>
+
+
 </template>
 <script>
     import ActorList from "./components/ActorList.vue";
     import AuthorList from "./components/AuthorList.vue";
+    import SearchBar from "./components/SearchBar.vue";
     export default {
         name: 'App',
         components: {
             ActorList,
-            AuthorList
+            AuthorList,
+            SearchBar
         },
         data() {
             return {
