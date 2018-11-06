@@ -5,13 +5,14 @@
         </div>
     </div>
 </template>
-
 <script>
+    import Episode from "./components/Episode.vue";
     import ShowCard from './components/ShowCard.vue'
 
     export default {
         name: 'App',
         components: {
+            Episode,
             ShowCard
         },
         data() {
