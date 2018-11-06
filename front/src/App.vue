@@ -1,27 +1,91 @@
 <template>
     <div class="container">
-        <div class="row">
-            <ShowCard :title=title :overview=overview :pict=pict :date_next_ep=date_next_ep :show_id="show_id"></ShowCard>
-        </div>
+        <ActorList
+                :actors= actor_list>
+        </ActorList>
+        <AuthorList
+                :authors= author_list>
+        </AuthorList>
     </div>
 </template>
 <script>
-    import Episode from "./components/Episode.vue";
-    import ShowCard from './components/ShowCard.vue'
-
+    import ActorList from "./components/ActorList.vue";
+    import AuthorList from "./components/AuthorList.vue";
     export default {
         name: 'App',
         components: {
-            Episode,
-            ShowCard
+            ActorList,
+            AuthorList
         },
         data() {
             return {
-                title: "Got",
-                overview: "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de mise en page de texte, comme Aldus PageMaker.",
-                pict: "https://www.wikichat.fr/wp-content/uploads/sites/2/Fotolia_99751581_S.jpg",
-                date_next_ep: new Date(),
-                show_id:1295
+                actor_list: [
+                    {
+                        name: "Johnny Depp",
+                        pict: "https://img1.closermag.fr/var/closermag/storage/images/bio-people/biographie-johnny-depp-112279/815563-1-fre-FR/Johnny-Depp_square500x500.jpg"
+                    },
+                    {
+                        name: "Leonardo Dicaprio",
+                        pict: "https://img3.closermag.fr/var/closermag/storage/images/1/2/5/7/7/12577149/leonardo-dicaprio-beverly-hills-2004_exact1024x768_p.jpg"
+                    },
+                    {
+                        name: "Johnny Depp",
+                        pict: "https://img1.closermag.fr/var/closermag/storage/images/bio-people/biographie-johnny-depp-112279/815563-1-fre-FR/Johnny-Depp_square500x500.jpg"
+                    },
+                    {
+                        name: "Leonardo Dicaprio",
+                        pict: "https://img3.closermag.fr/var/closermag/storage/images/1/2/5/7/7/12577149/leonardo-dicaprio-beverly-hills-2004_exact1024x768_p.jpg"
+                    },
+                    {
+                        name: "Johnny Depp",
+                        pict: "https://img1.closermag.fr/var/closermag/storage/images/bio-people/biographie-johnny-depp-112279/815563-1-fre-FR/Johnny-Depp_square500x500.jpg"
+                    },
+                    {
+                        name: "Leonardo Dicaprio",
+                        pict: "https://img3.closermag.fr/var/closermag/storage/images/1/2/5/7/7/12577149/leonardo-dicaprio-beverly-hills-2004_exact1024x768_p.jpg"
+                    },
+                    {
+                        name: "Johnny Depp",
+                        pict: "https://img1.closermag.fr/var/closermag/storage/images/bio-people/biographie-johnny-depp-112279/815563-1-fre-FR/Johnny-Depp_square500x500.jpg"
+                    },
+                    {
+                        name: "Leonardo Dicaprio",
+                        pict: "https://img3.closermag.fr/var/closermag/storage/images/1/2/5/7/7/12577149/leonardo-dicaprio-beverly-hills-2004_exact1024x768_p.jpg"
+                    }
+                ],
+                author_list: [
+                    {
+                        name_author: "Spielberg",
+                        role_author: "Réalisateur"
+                    },
+                                        {
+                        name_author: "Spielberg avec un nom vraiment très très long",
+                        role_author: "Réalisateur"
+                    },
+                                        {
+                        name_author: "Spielberg",
+                        role_author: "Réalisateur avec un rôle vraiment très très long"
+                    },
+                                        {
+                        name_author: "Spielberg avec un nom vraiment très très long",
+                        role_author: "Réalisateur avec un rôle vraiment très très long"
+                    },
+                                        {
+                        name_author: "Spielberg",
+                        role_author: "Réalisateur"
+                    },                    {
+                        name_author: "Spielberg",
+                        role_author: "Réalisateur"
+                    },
+                                        {
+                        name_author: "Spielberg avec un nom vraiment très très long",
+                        role_author: "Réalisateur"
+                    },
+                                        {
+                        name_author: "Spielberg",
+                        role_author: "Réalisateur avec un rôle vraiment très très long"
+                    }
+                ]
             }
         }
     }
