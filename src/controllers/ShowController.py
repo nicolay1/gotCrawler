@@ -41,7 +41,7 @@ class ShowController:
         db_show = Show.retrieve_show_from_bdd(api_show.api_id, my_db)
         if db_show is not None:
             ShowController.check_for_update(my_db, db_show)
-            api_show.db_id = db_show.db_id
+            api_show.associate_db_id(db_show.db_id)
         return api_show
 
     @staticmethod

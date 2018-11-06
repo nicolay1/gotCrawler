@@ -5,7 +5,7 @@ from datetime import datetime
 
 from src.db.MyDBConnection import MyDBConnection
 
-from src.helper import str_to_datetime
+from src.helper import str_to_datetime, datetime_to_str
 
 
 class Show:
@@ -28,7 +28,7 @@ class Show:
                  season_next_episode_num: int = None,
                  next_episode_num: int = None,
                  date_next_episode: datetime = None,
-                 last_maj: datetime = datetime.now(),
+                 last_maj: datetime = datetime.now().replace(microsecond=0),
                  db_id: int = None,
                  season_list: List[Season] = None,
                  number_of_episodes: int = None,
@@ -133,10 +133,8 @@ class Show:
         return self.__season_list
 
     def __set_season_list(self, season_list: List[Season]):
-        if type(season_list) is not int and season_list is not None:
-            raise TypeError("The season list should be list of seasons")
-        else:
-            self.__season_list = season_list
+        # each object should be correctly populated
+        self.__season_list = season_list
 
     @property
     def number_of_episodes(self):
@@ -167,6 +165,9 @@ class Show:
             raise TypeError("The overview should be a string")
         else:
             self.__overview = overview
+    
+    def associate_db_id(self, db_id: int):
+        self.__set_db_id(db_id)
 
     def create_show_in_bdd(self, my_db: MyDBConnection):
         my_db.exec_one("""
@@ -189,16 +190,16 @@ class Show:
             self.__set_next_episode_num(next_episode_num)
         if date_next_episode is not None:
             self.__set_date_next_episode(date_next_episode)
-            self.__set_last_maj(datetime.now())
+            self.__set_last_maj(datetime.now().replace(microsecond=0))
         if season_list is not None:
             self.__set_season_list(season_list)
         if number_of_episodes is not None:
             self.__set_number_of_episodes(number_of_episodes)
         if number_of_seasons is not None:
             self.__set_number_of_seasons(number_of_seasons)
-        my_db.exec_one("UPDATE SHOW SET pict=(?), last_maj=(?), season_next_episode=(?), next_episode_date=(?), "
-                       "next_episode_num=(?), WHERE api_id=(?)",
-                       (self.pict, self.last_maj, self.season_next_episode_num, self.date_next_episode,
+        my_db.exec_one("UPDATE SHOW SET pict=(?), last_maj=(?), season_next_episode_num=(?), next_episode_date=(?), "
+                       "next_episode_num=(?) WHERE api_id=(?)",
+                       (self.pict, datetime_to_str(self.last_maj), self.season_next_episode_num, datetime_to_str(self.date_next_episode),
                         self.next_episode_num,
                         self.api_id)
                        )
@@ -216,13 +217,14 @@ class Show:
         return {
             "title": self.title,
             "pict": self.pict,
+            "overview": self.overview,
             "api_id": self.api_id,
             "season_next_episode_num": self.season_next_episode_num,
             "next_episode_num": self.next_episode_num,
-            "date_next_episode": self.date_next_episode,
-            "last_maj": self.last_maj,
+            "date_next_episode": str(self.date_next_episode) if self.last_maj is not None else None,
+            "last_maj": str(self.last_maj) if self.last_maj is not None else None,
             "db_id": self.db_id,
-            "season_list": self.season_list,
+            "season_list": [season.to_json() for season in self.season_list] if self.season_list else None,
             "number_of_episodes": self.number_of_episodes,
             "number_of_seasons": self.number_of_seasons
         }

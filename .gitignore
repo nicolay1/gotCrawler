@@ -151,3 +151,4 @@ config/secret.json
 /front/yarn-debug.log*
 /front/yarn-error.log*
 
+package-lock.json

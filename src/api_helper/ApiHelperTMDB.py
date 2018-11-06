@@ -1,12 +1,14 @@
 from typing import Dict
 from src.models.Show import *
 from datetime import datetime
+
 from src.models.Episode import Episode
 from src.models.Author import Author
 from src.models.Actor import Actor
 from src.models.Season import Season
 from src.config import CONFIG
 from src.api_helper.ApiHelper import ApiHelper
+from src.helper.date import str_to_datetime
 
 
 class ApiHelperTMDB(ApiHelper):
@@ -18,7 +20,8 @@ class ApiHelperTMDB(ApiHelper):
         super().__init__(
             CONFIG["tmdb_api_root"],
             {
-                "api_key": CONFIG["tmdb_api_key"]
+                "api_key": CONFIG["tmdb_api_key"],
+                "language": CONFIG["tmdb_api_language"]
             }
         )
 
@@ -26,6 +29,7 @@ class ApiHelperTMDB(ApiHelper):
         return self._get("trending/tv/week", None, {"page": page})
 
     def get_show(self, show_id: int):
+        print(show_id)
         json = self._get("tv/{}", (show_id))
         return self._api_json_to_show(json)
 
@@ -39,7 +43,7 @@ class ApiHelperTMDB(ApiHelper):
 
     def get_search(self, query: str):
         json = self._get("search/tv", None, {"query": query})
-        return self._api_json_search_to_show_list()
+        return self._api_json_search_to_show_list(json)
 
     def _api_json_search_to_show_list(self, result_json: Dict):
         show_list = []
@@ -50,7 +54,7 @@ class ApiHelperTMDB(ApiHelper):
             overview = show_json["overview"]
             show = Show(title=title, pict=pict, api_id=api_id, season_next_episode_num=None,
                         next_episode_num=None, date_next_episode=None,
-                        last_maj=datetime.now(), db_id=None, season_list=None, number_of_episodes=None,
+                        last_maj=datetime.now().replace(microsecond=0), db_id=None, season_list=None, number_of_episodes=None,
                         number_of_seasons=None, overview=overview)
             show_list.append(show)
         return show_list
@@ -59,10 +63,15 @@ class ApiHelperTMDB(ApiHelper):
         title = show_json["name"]
         pict = show_json["poster_path"]
         api_id = show_json["id"]
-        season_next_episode_num = show_json["next_episode_to_air"]["season_number"]
-        next_episode_num = show_json["next_episode_to_air"]["episode_number"]
-        date_next_episode = show_json["next_episode_to_air"]["air_date"]
-        last_maj = datetime.now()
+        if show_json["next_episode_to_air"] is not None:
+            season_next_episode_num = show_json["next_episode_to_air"]["season_number"]
+            next_episode_num = show_json["next_episode_to_air"]["episode_number"]
+            date_next_episode = str_to_datetime(show_json["next_episode_to_air"]["air_date"])
+        else:
+            season_next_episode_num = None
+            next_episode_num = None
+            date_next_episode = None
+        last_maj = datetime.now().replace(microsecond=0)
         db_id = None
         number_of_episodes = show_json["number_of_episodes"]
         number_of_seasons = show_json["number_of_seasons"]
@@ -71,11 +80,10 @@ class ApiHelperTMDB(ApiHelper):
         for season_json in show_json["seasons"]:
             num_season = season_json["season_number"]
             name = season_json["name"]
-            overview = season_json["overview"]
-            poster = season_json["poster_path"]
-            season = Season(api_id, num_season, name, poster, overview, None)
+            season_overview = season_json["overview"] if season_json["overview"] else ""
+            season_pict = season_json["poster_path"] if season_json["poster_path"] else ""
+            season = Season(api_id, num_season, name, season_pict, season_overview, None)
             list_season.append(season)
-
         show = Show(title=title, pict=pict, api_id=api_id, season_next_episode_num=season_next_episode_num,
                     next_episode_num=next_episode_num, date_next_episode=date_next_episode,
                     last_maj=last_maj, db_id=db_id, season_list=list_season, number_of_episodes=number_of_episodes,
@@ -101,6 +109,7 @@ class ApiHelperTMDB(ApiHelper):
         list_actor = [
             self._api_json_to_actor(actor_json) for actor_json in episode_json["guest_stars"]
         ]
+        print(episode_json)
         list_author = [
             self._api_json_to_author(author_json) for author_json in episode_json["author_json"]
         ]

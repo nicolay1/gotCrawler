@@ -14,7 +14,7 @@ class Actor(Person):
         return self.__pict
 
     def __set_pict(self, pict: str):
-        if type(pict) is not str:
+        if type(pict) is not str and pict is not None:
             raise TypeError("The attribute pict of Actor should be a string.")
         else:
             self.__pict = pict

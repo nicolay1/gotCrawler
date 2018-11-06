@@ -1,5 +1,4 @@
 <template>
-
     <div class="container">
         <ActorList
                 :actors= actor_list>
