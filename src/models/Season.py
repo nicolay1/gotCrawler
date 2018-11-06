@@ -1,4 +1,7 @@
 from typing import List
+
+import json
+
 from src.models.Episode import *
 
 
@@ -24,7 +27,7 @@ class Season:
         if type(id_show) is not int:
             raise TypeError("Show id must be an integer")
         else:
-            self.__id_show = id_sow
+            self.__id_show = id_show
 
     @property
     def num_season(self):
@@ -85,3 +88,6 @@ class Season:
             "poster": self.poster,
             "overview": self.overview
         }
+    
+    def __repr__(self):
+        return json.dumps(self.to_json())

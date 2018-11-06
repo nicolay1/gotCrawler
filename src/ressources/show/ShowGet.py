@@ -10,5 +10,6 @@ class ShowGet(Resource):
     """
     def get(self, api_id):
         my_db = MyDBConnection("db/gotCrawler.db")
+        api_id = int(api_id)
         show = ShowController.get_one_all_info(api_id, my_db)
         return show.to_json()
