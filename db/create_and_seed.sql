@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS `show` (
 );
 -- populate show
 INSERT INTO show (id, pict, title, season_next_episode_num, next_episode_num, next_episode_date, api_id) VALUES 
-(1,'https://image.tmdb.org/t/p/w370_and_h556_bestv2/gwPSoYUHAKmdyVywgLpKKA4BjRr.jpg', 'Game of Thrones', 8, 1, '2019-04-14 14:00:00',1399),
-(2,'https://image.tmdb.org/t/p/w1280/zQsEi6096L7PvowV39dtdqdW16f.jpg','Twin Peaks', NULL, NULL, NULL, 452522);
+(1,'https://image.tmdb.org/t/p/w370_and_h556_bestv2/gwPSoYUHAKmdyVywgLpKKA4BjRr.jpg', 'Game of Thrones', 8, 1, '2019-04-14 14:00:00',1402),
+(2,'https://image.tmdb.org/t/p/w1280/zQsEi6096L7PvowV39dtdqdW16f.jpg','Twin Peaks', NULL, NULL, NULL, 1920);
 
 
 -- create preference table
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS preference (
 );
 -- populate preference
 INSERT INTO preference (id, id_user, id_show, seen_flag) VALUES 
-(1,1,452522,0),(2,1,1399,0),(3,2,1399,0),(4,3,452522,0);
+(1,1,1920,0),(2,1,1402,0),(3,2,1402,0),(4,3,1920,0);
 
 CREATE TABLE IF NOT EXISTS user (
     surname VARCHAR(255),

@@ -29,16 +29,16 @@ class UserPref(Resource):
 
         # retrieve the user from the id
         user = UserController.get_one_from_id(user_id, my_db)
-        if not user:
-            return None
+        if user is None:
+            return "Error, this user does not exist"
 
         posted_data = request.get_json()
         show_id = posted_data["show_id"]
 
         # get the show from the id
-        show = ShowController.get_on_from_db_w_api_id(my_db, show_id)
-        if not show:
-            return None
+        show = ShowController.get_or_create_from_db_w_api_id(my_db, show_id)
+        if show is None:
+            return "Error, the API does not know this Show.", 500
 
         PreferenceController.add_preference(my_db, user, show, 0)
 
