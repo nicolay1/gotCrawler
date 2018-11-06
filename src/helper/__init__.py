@@ -1,1 +1,1 @@
-from .date import str_to_datetime
+from .date import str_to_datetime, datetime_to_str
