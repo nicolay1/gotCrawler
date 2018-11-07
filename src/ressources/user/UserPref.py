@@ -1,4 +1,3 @@
-from flask_restful import Resource
 from flask import request
 
 from src.controllers.UserController import UserController
@@ -7,7 +6,9 @@ from src.controllers.ShowController import ShowController
 
 from src.db.MyDBConnection import MyDBConnection
 
-class UserPref(Resource):
+from .User import UserRessource
+
+class UserPref(UserRessource):
     """
         Get a user preferences
     """
