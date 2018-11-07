@@ -56,7 +56,7 @@ class UserPref(Resource):
         show_id = delete_data["show_id"]
 
         # get the show from the id
-        show = ShowController.get_on_from_db_w_api_id(my_db, show_id)
+        show = ShowController.get_or_create_from_db_w_api_id(my_db, show_id)
         if not show:
             return None
 

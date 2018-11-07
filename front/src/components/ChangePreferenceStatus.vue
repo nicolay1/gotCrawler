@@ -1,0 +1,62 @@
+<template>
+    <b-btn v-on:click="ChangePref()">
+        <font-awesome-icon :icon="['far', 'heart']" v-if="data_state===0"></font-awesome-icon>
+        <font-awesome-icon :icon="['fas', 'heart']" v-else-if="data_state===1"></font-awesome-icon>
+    </b-btn>
+
+</template>
+
+<script>
+
+    import api from "../helpers/api.js"
+    import axios from "axios"
+
+    export default {
+        name: "ChangePreferenceStatus",
+        props: {
+            show_id: {type: Number, required: true},
+            state: {type: Number}
+
+        },
+        data() {
+            return {
+                data_state: this.state
+
+            }
+        },
+        methods: {
+            ChangePref: function () {
+                if (this.data_state === 0) {
+                    axios
+                        .post('http://localhost:5000/user/3/pref', {show_id: this.show_id})
+                        .then(() => {
+                            this.data_state = 1;
+                            this.$parent.$parent.$emit('changestatus', [this.show_id, this.data_state]);
+                            this.mounted();
+
+
+                        })
+                        .catch((err) => console.log(err))
+
+                }
+                else if (this.data_state === 1) {
+                    axios
+                        .delete('http://localhost:5000/user/3/pref',{data: {show_id: this.show_id}})
+                        .then(() => {
+                            this.data_state = 0;
+                            this.$parent.$parent.$emit('changestatus', [this.show_id, this.data_state]);
+                            this.mounted();
+
+                        })
+                        .catch((err) => console.log(err))
+
+                }
+            }
+        }
+
+    }
+</script>
+
+<style scoped>
+
+</style>

@@ -85,7 +85,7 @@ class Season:
             "num_season": self.num_season,
             "list_episodes": self.list_episodes,
             "name": self.name,
-            "poster": self.poster,
+            "poster": "https://image.tmdb.org/t/p/w1280"+self.poster,
             "overview": self.overview
         }
     

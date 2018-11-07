@@ -8,6 +8,8 @@ from .User import User
 from .Show import Show
 
 from datetime import date
+from src.helper import datetime_to_str
+
 
 
 class ShowPreferences:
@@ -121,8 +123,9 @@ class ShowPreferences:
     def to_json(self):
         return {
             "api_id": self.api_id,
-            "pict": self.pict,
+            "pict": "https://image.tmdb.org/t/p/w1280"+self.pict if self.pict is not None else None,
             "next_ep_num": self.next_ep_num,
+            #TODO quand la méthode get_show_preferences_from_user est corrigé !! "next_ep_date": datetime_to_str(self.next_ep_date),
             "next_ep_date": self.next_ep_date,
             "next_season_num": self.next_ep_num,
             "title": self.title,
