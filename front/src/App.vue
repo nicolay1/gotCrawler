@@ -1,76 +1,47 @@
 <template>
-    <div>
-        <b-container>
-            <b-row>
-                <b-col cols="3">
-                    <show-card-minimal :title="show.title"
-                                       :overview="show.overview"
-                                       :pict="show.pict"
-                                       :date_next_ep="show.date_next_episode"
-                                       :show_id="show.api_id"
-                                       :state=0></show-card-minimal>
-                </b-col>
-            </b-row>
-        </b-container>
-        <landing-page :list_preference="list_preferences" @changestatus="changestatus"></landing-page>
+    <div id="app">
+        <notifications 
+                    position="top right"
+                    :speed="500"
+                    :duration="10000"/>
+        <b-container v-if="show">
+        <router-view :list_preference="list_preferences">
+
+        </router-view>
     </div>
 
 </template>
 <script>
-
-    import LandingPage from "./views/LandingPage.vue";
-    import ChangePreferenceStatus from "./components/ChangePreferenceStatus.vue";
     import api from "./helpers/api.js"
-    import ShowCardMinimal from "./components/ShowCardMinimal.vue";
 
     export default {
         name: 'App',
-        components: {
-            ShowCardMinimal,
-            ChangePreferenceStatus,
-            LandingPage,
-        },
         mounted() {
-            this.init()
+            this.init();
         },
         data() {
             return {
                 list_preferences: [],
-                show: null,
-
             }
-
         },
         methods: {
             init() {
                 api.get("user/3/pref")
-                    .then((res) => {
-                        this.list_preferences = res;
-                        for (let i = 0; i < this.list_preferences.length; i++) {
-                            this.list_preferences[i].state = 1;
-                        }
-                    }).catch((err) => console.log(err));
-
-                api.get("show/1399")
-                    .then((res) => {
-                        this.show = res;
-                    }).catch((err) => console.log(err))
-
-
+                    .then((list_pref) => {
+                        this.list_preferences = list_pref.map((pref) => {
+                            return {
+                                title: pref.title,
+                                overview: pref.overview,
+                                pict: pref.pict,
+                                date_next_ep: pref.date_next_ep ? Date(pref.date_next_ep) : null,
+                                show_id: pref.api_id,
+                                state: 1,
+                            }
+                        });
+                    })
             },
             changestatus(event) {
-                /*if (variable[1] === 0) {
-                    var index = this.list_preference.findIndex(obj => {
-                        return obj.show_id === variable[0]
-                    });
-
-                    this.list_preference.splice(index, 1);
-                }
-                else if (variable[1] === 1) {
-                    this.list_preference.push()
-                }*/
                 this.init();
-
             }
         },
     }
