@@ -1,7 +1,6 @@
 <template>
     <b-card :img-src="pict"
             img-top
-            v-on:click=""
     >
 
         <b-row>
@@ -44,8 +43,6 @@
         data() {
             //Ligne commentée car tant que la date n'est pas géré dans les préférences ça fait tout bugué
             //let date_to_string = this.date_next_ep.toLocaleDateString();
-
-
             return {
                 data_state: this.state,
                 //date_to_string: date_to_string,

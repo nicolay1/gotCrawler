@@ -1,5 +1,7 @@
-import config from '../../config'
 import * as axios from 'axios'
+
+import config from '../../config'
+import {push_notif_err} from './notifs'
 
 class ApiHelper {
     constructor(){
@@ -38,7 +40,7 @@ class ApiHelper {
                 }
             )
             .then((res) => resolve(res.data))
-            .catch((err) => reject(err))
+            .catch((err) => push_notif_err(err))
         )
     }
     post(ressourcePath, params){
@@ -53,7 +55,7 @@ class ApiHelper {
                 }
             )
             .then((res) => resolve(res.data))
-            .catch((err) => reject(err))
+            .catch((err) => push_notif_err(err))
         )
     }
     delete(ressourcePath, params){
@@ -68,7 +70,7 @@ class ApiHelper {
                 }
             )
             .then((res) => resolve(res.data))
-            .catch((err) => reject(err))
+            .catch((err) => push_notif_err(err))
         )
     }
 }
