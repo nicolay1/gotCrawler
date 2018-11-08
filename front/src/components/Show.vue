@@ -77,7 +77,7 @@
             api.get('show/' + this.$route.params.id)
                 .then((res) => {
                     this.show = res;
-                    this.formated_date_next_ep = res.date_next_episode // ? res.date_next_episode.toLocaleDateString() : null;
+                    this.formated_date_next_ep = res.date_next_episode  ?new Date(res.date_next_episode).toLocaleDateString() : null;
                 }).catch((err) => console.log(err));
 
             return {

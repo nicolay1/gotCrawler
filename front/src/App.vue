@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <router-view name="LandingPage" :list_preference="list_preferences">
+        <router-view :list_preference="list_preferences">
 
         </router-view>
     </div>
