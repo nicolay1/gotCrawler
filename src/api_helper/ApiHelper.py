@@ -3,6 +3,7 @@ import requests
 from typing import Dict, Tuple
 from urllib.parse import urljoin
 
+from src.errors import ErrorApiConnexionError
 
 class ApiHelper:
     """
@@ -44,6 +45,8 @@ class ApiHelper:
         response = requests.get(url)
         if response.status_code == 200:
             return response.json()
+        elif response.status_code >= 400:
+            raise ErrorApiConnexionError
         return None
 
     @property

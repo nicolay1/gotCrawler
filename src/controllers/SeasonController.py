@@ -9,4 +9,4 @@ class SeasonController:
     @classmethod
     def get_one_season(cls, show_id: int, num_season: int):
         api = ApiHelperTMDB()
-        api.get_season(show_id, num_season)
+        return api.get_season(show_id, num_season)

@@ -1,6 +1,7 @@
 import sqlite3
 from typing import List, Dict, Tuple
 
+from src.errors import ErrorDbConnexionError
 
 class MyDBConnection:
     """
