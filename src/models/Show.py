@@ -216,7 +216,7 @@ class Show:
     def to_json(self):
         return {
             "title": self.title,
-            "pict": "https://image.tmdb.org/t/p/w1280"+self.pict,
+            "pict": "https://image.tmdb.org/t/p/w1280"+self.pict if self.pict is not None else None,
             "overview": self.overview,
             "api_id": self.api_id,
             "season_next_episode_num": self.season_next_episode_num,
