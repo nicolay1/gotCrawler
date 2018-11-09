@@ -4,7 +4,6 @@ def str_to_datetime(str_to_cast: str):
     if str_to_cast is None:
         return None
     try:
-        str_to_cast = str_to_cast
         return datetime.strptime(str_to_cast, "%Y-%m-%d %H:%M:%S")
     except ValueError:
         try:

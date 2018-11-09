@@ -63,7 +63,7 @@ class Show:
         return self.__pict
 
     def __set_pict(self, pict: str):
-        if type(pict) is not str:
+        if type(pict) is not str and pict is not None:
             raise TypeError("Pict url should be an string")
         else:
             self.__pict = pict
@@ -171,8 +171,8 @@ class Show:
 
     def create_show_in_bdd(self, my_db: MyDBConnection):
         my_db.exec_one("""
-        INSERT INTO show (pict, last_maj, title, season_next_episode, next_episode_date, next_episode_num, api_id) 
-        VALUES ((?), (?), (?), (?), (?), (?), (?), (?))""", (
+        INSERT INTO show (pict, last_maj, title, season_next_episode_num, next_episode_date, next_episode_num, api_id) 
+        VALUES ((?), (?), (?), (?), (?), (?), (?))""", (
             self.pict, self.last_maj, self.title, self.season_next_episode_num, self.date_next_episode,
             self.next_episode_num, self.api_id
         ))
@@ -216,13 +216,13 @@ class Show:
     def to_json(self):
         return {
             "title": self.title,
-            "pict": self.pict,
+            "pict": "https://image.tmdb.org/t/p/w1280"+self.pict,
             "overview": self.overview,
             "api_id": self.api_id,
             "season_next_episode_num": self.season_next_episode_num,
             "next_episode_num": self.next_episode_num,
-            "date_next_episode": str(self.date_next_episode) if self.last_maj is not None else None,
-            "last_maj": str(self.last_maj) if self.last_maj is not None else None,
+            "date_next_episode": datetime_to_str(self.date_next_episode) if self.last_maj is not None else None,
+            "last_maj": datetime_to_str(self.last_maj) if self.last_maj is not None else None,
             "db_id": self.db_id,
             "season_list": [season.to_json() for season in self.season_list] if self.season_list else None,
             "number_of_episodes": self.number_of_episodes,

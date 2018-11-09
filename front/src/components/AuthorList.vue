@@ -3,9 +3,10 @@
     <b-container class="author_class" fluid>
         <b-row align-v="center" >
             <Author
-                v-for="author in authors"
+                v-for="(author, index) in authors"
                 v-bind:name_author="author.name_author"
                 v-bind:role_author="author.role_author"
+                v-bind:key=index
             >
             </Author>
         </b-row>

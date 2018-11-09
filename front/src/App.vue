@@ -1,92 +1,56 @@
 <template>
-    <div class="container">
-        <ActorList
-                :actors= actor_list>
-        </ActorList>
-        <AuthorList
-                :authors= author_list>
-        </AuthorList>
+    <div id="app">
+        <notifications 
+                    position="top right"
+                    :speed="500"
+                    :duration="10000"/>
+        <b-container v-if="show">
+        <router-view :list_preference="list_preferences">
+
+        </router-view>
+
     </div>
 </template>
+
 <script>
-    import ActorList from "./components/ActorList.vue";
-    import AuthorList from "./components/AuthorList.vue";
+    import api from "./helpers/api.js"
+
     export default {
         name: 'App',
-        components: {
-            ActorList,
-            AuthorList
+        mounted() {
+            this.init();
         },
         data() {
             return {
-                actor_list: [
-                    {
-                        name: "Johnny Depp",
-                        pict: "https://img1.closermag.fr/var/closermag/storage/images/bio-people/biographie-johnny-depp-112279/815563-1-fre-FR/Johnny-Depp_square500x500.jpg"
-                    },
-                    {
-                        name: "Leonardo Dicaprio",
-                        pict: "https://img3.closermag.fr/var/closermag/storage/images/1/2/5/7/7/12577149/leonardo-dicaprio-beverly-hills-2004_exact1024x768_p.jpg"
-                    },
-                    {
-                        name: "Johnny Depp",
-                        pict: "https://img1.closermag.fr/var/closermag/storage/images/bio-people/biographie-johnny-depp-112279/815563-1-fre-FR/Johnny-Depp_square500x500.jpg"
-                    },
-                    {
-                        name: "Leonardo Dicaprio",
-                        pict: "https://img3.closermag.fr/var/closermag/storage/images/1/2/5/7/7/12577149/leonardo-dicaprio-beverly-hills-2004_exact1024x768_p.jpg"
-                    },
-                    {
-                        name: "Johnny Depp",
-                        pict: "https://img1.closermag.fr/var/closermag/storage/images/bio-people/biographie-johnny-depp-112279/815563-1-fre-FR/Johnny-Depp_square500x500.jpg"
-                    },
-                    {
-                        name: "Leonardo Dicaprio",
-                        pict: "https://img3.closermag.fr/var/closermag/storage/images/1/2/5/7/7/12577149/leonardo-dicaprio-beverly-hills-2004_exact1024x768_p.jpg"
-                    },
-                    {
-                        name: "Johnny Depp",
-                        pict: "https://img1.closermag.fr/var/closermag/storage/images/bio-people/biographie-johnny-depp-112279/815563-1-fre-FR/Johnny-Depp_square500x500.jpg"
-                    },
-                    {
-                        name: "Leonardo Dicaprio",
-                        pict: "https://img3.closermag.fr/var/closermag/storage/images/1/2/5/7/7/12577149/leonardo-dicaprio-beverly-hills-2004_exact1024x768_p.jpg"
-                    }
-                ],
-                author_list: [
-                    {
-                        name_author: "Spielberg",
-                        role_author: "Réalisateur"
-                    },
-                                        {
-                        name_author: "Spielberg avec un nom vraiment très très long",
-                        role_author: "Réalisateur"
-                    },
-                                        {
-                        name_author: "Spielberg",
-                        role_author: "Réalisateur avec un rôle vraiment très très long"
-                    },
-                                        {
-                        name_author: "Spielberg avec un nom vraiment très très long",
-                        role_author: "Réalisateur avec un rôle vraiment très très long"
-                    },
-                                        {
-                        name_author: "Spielberg",
-                        role_author: "Réalisateur"
-                    },                    {
-                        name_author: "Spielberg",
-                        role_author: "Réalisateur"
-                    },
-                                        {
-                        name_author: "Spielberg avec un nom vraiment très très long",
-                        role_author: "Réalisateur"
-                    },
-                                        {
-                        name_author: "Spielberg",
-                        role_author: "Réalisateur avec un rôle vraiment très très long"
-                    }
-                ]
+                list_preferences: [],
             }
-        }
+        },
+        methods: {
+            init() {
+                api.get("user/3/pref")
+                    .then((list_pref) => {
+                        this.list_preferences = list_pref.map((pref) => {
+                            return {
+                                title: pref.title,
+                                overview: pref.overview,
+                                pict: pref.pict,
+                                date_next_ep: pref.date_next_ep ? Date(pref.date_next_ep) : null,
+                                show_id: pref.api_id,
+                                state: 1,
+                            }
+                        });
+                    })
+            },
+            changestatus(event) {
+                this.init();
+            }
+        },
+
     }
 </script>
+
+<style>
+    #app {
+
+    }
+</style>

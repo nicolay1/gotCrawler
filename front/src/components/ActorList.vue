@@ -3,9 +3,10 @@
     <b-container class="actor_class" fluid>
         <b-row class="actor_row">
             <Actor
-                v-for="actor in actors"
+                v-for="(actor, index) in actors"
                 v-bind:pict="actor.pict"
                 v-bind:name_actor="actor.name"
+                v-bind:key=index
             >
             </Actor>
         </b-row>
