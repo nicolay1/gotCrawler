@@ -1,7 +1,7 @@
 <template>
     <b-container>
         <b-row>
-            <b-col cols="3" v-for="show in list_preference">
+            <b-col cols="3" v-for="(show,index) in list_preference" :key="index">
                 <show-card-minimal :title="show.title"
                            :overview="show.overview"
                            :pict="show.pict"
