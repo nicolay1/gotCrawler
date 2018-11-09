@@ -1,6 +1,7 @@
 <template>
     <b-card :img-src="pict"
             img-top
+            v-on:click="goToShow"
     >
 
         <b-row>
@@ -48,6 +49,11 @@
                 //date_to_string: date_to_string,
             }
         },
+        methods:{
+            goToShow(){
+                this.$router.push('/show/'+this.show_id.toString())
+            }
+        }
 
     }
 </script>

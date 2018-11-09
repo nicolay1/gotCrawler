@@ -8,9 +8,10 @@
         <router-view :list_preference="list_preferences">
 
         </router-view>
-    </div>
 
+    </div>
 </template>
+
 <script>
     import api from "./helpers/api.js"
 
@@ -44,7 +45,12 @@
                 this.init();
             }
         },
+
     }
-
-
 </script>
+
+<style>
+    #app {
+
+    }
+</style>
