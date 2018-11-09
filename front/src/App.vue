@@ -1,43 +1,48 @@
 <template>
     <div id="app">
+        <notifications 
+                    position="top right"
+                    :speed="500"
+                    :duration="10000"/>
+        <b-container v-if="show">
         <router-view :list_preference="list_preferences">
 
         </router-view>
+
     </div>
 </template>
 
 <script>
     import api from "./helpers/api.js"
 
-
     export default {
         name: 'App',
         mounted() {
-            this.init()
+            this.init();
         },
         data() {
             return {
                 list_preferences: [],
-
             }
-
         },
         methods: {
             init() {
                 api.get("user/3/pref")
-                    .then((res) => {
-                        this.list_preferences = res;
-                        for (let i = 0; i < this.list_preferences.length; i++) {
-                            this.list_preferences[i].state = 1;
-                        }
-                    }).catch((err) => console.log(err));
-
-
+                    .then((list_pref) => {
+                        this.list_preferences = list_pref.map((pref) => {
+                            return {
+                                title: pref.title,
+                                overview: pref.overview,
+                                pict: pref.pict,
+                                date_next_ep: pref.date_next_ep ? Date(pref.date_next_ep) : null,
+                                show_id: pref.api_id,
+                                state: 1,
+                            }
+                        });
+                    })
             },
-            changestatus() {
-
+            changestatus(event) {
                 this.init();
-
             }
         },
 
