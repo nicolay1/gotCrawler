@@ -10,6 +10,8 @@ from src.config import CONFIG
 from src.api_helper.ApiHelper import ApiHelper
 from src.helper.date import str_to_datetime
 
+from src.errors import ErrorShowDoesNotExist, ErrorSeasonDoesNotExist, ErrorEpisodeDoesNotExist
+
 
 class ApiHelperTMDB(ApiHelper):
     """
@@ -29,22 +31,30 @@ class ApiHelperTMDB(ApiHelper):
         return self._get("trending/tv/week", None, {"page": page})
 
     def get_show(self, show_id: int):
-        print(show_id)
         json = self._get("tv/{}", (show_id))
+        if json is None:
+            raise ErrorShowDoesNotExist()
         return self._api_json_to_show(json)
 
     def get_season(self, show_id: int, season_number: int):
         json = self._get("tv/{}/season/{}", (show_id, season_number))
+        if json is None:
+            raise ErrorSeasonDoesNotExist()
         return self._api_json_to_season(json, show_id)
 
     def get_episode(self, show_id: int, season_number: int, episode_number: int):
         json = self._get("tv/{}/season/{}/episode/{}", (show_id, season_number, episode_number))
+        if json is None:
+            raise ErrorEpisodeDoesNotExist()
         return self._api_json_to_episode(json)
 
     def get_search(self, query: str):
         json = self._get("search/tv", None, {"query": query})
         return self._api_json_search_to_show_list(json)
 
+    #
+    # These function extract JSON data from the API and convert to an object
+    #
     def _api_json_search_to_show_list(self, result_json: Dict):
         show_list = []
         for show_json in result_json["results"]:
