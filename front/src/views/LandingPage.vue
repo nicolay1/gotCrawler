@@ -14,7 +14,7 @@
 
     export default {
         name: "LandingPage",
-        components: {SearchBar, ListPreferences},
+        components: {SearchBar, ListPreferences, ShowCardMinimal},
         created() {
             this.init();
         },
