@@ -1,5 +1,5 @@
 <template>
-    <b-col cols="3" class="actor_card">
+    <b-col cols="4" class="actor_card">
         <b-container class="card">
             <b-row align-v="center">
                 <b-col md="12" lg="6" class="pict">
@@ -29,15 +29,12 @@
         text-align: center;
         margin: 0px 0px 0px 0px;
         padding: 2px 2px 2px 2px;
-
     }
     .pict_class{
-    max-height: 100px;
-
-
+        max-height: 100px;
+        min-height: 100px;
     }
     .name {
         text-align: center;
-
     }
 </style>

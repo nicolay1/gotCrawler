@@ -7,6 +7,7 @@
 
 <script>
 
+
     import ListPreferences from "../components/ListPreferences.vue";
     import api from "../helpers/api.js"
     import SearchBar from "../components/SearchBar.vue";

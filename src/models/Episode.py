@@ -1,3 +1,4 @@
+import json
 from typing import List
 
 from src.models.Actor import Actor
@@ -64,7 +65,7 @@ class Episode:
         return self.__list_actor
 
     def __set_list_actor(self, list_actor: List[Actor]):
-        if type(list_actor) is not List[Actor]:
+        if type(list_actor) is not list and list_actor is not None:
             raise TypeError("Actor's list should be a list")
         else:
             self.__list_actor = list_actor
@@ -74,17 +75,26 @@ class Episode:
         return self.__list_author
 
     def __set_list_author(self, list_author: List[Author]):
-        if type(list_author) is not List[Author]:
+        if type(list_author) is not list and list_author is not None:
             raise TypeError("Author's list should be a list")
         else:
             self.__list_author = list_author
 
     def to_json(self):
+        result_actors = []
+        for actor in self.list_actor:
+            result_actors.append(actor.to_json())
+        result_authors = []
+        for author in self.list_author:
+            result_authors.append(author.to_json())
         return {
             "name": self.name,
             "num_season": self.num_season,
             "num_ep": self.num_ep,
             "summary": self.summary,
-            "list_actor": self.list_actor,
-            'list_author': self.list_author
+            "list_actor": result_actors,
+            'list_author': result_authors
         }
+
+    def __repr__(self):
+        return json.dumps(self.to_json())

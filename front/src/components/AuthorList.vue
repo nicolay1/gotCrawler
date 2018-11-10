@@ -4,8 +4,8 @@
         <b-row align-v="center" >
             <Author
                 v-for="(author, index) in authors"
-                v-bind:name_author="author.name_author"
-                v-bind:role_author="author.role_author"
+                v-bind:name_author="author.name"
+                v-bind:role_author="author.role"
                 v-bind:key=index
             >
             </Author>

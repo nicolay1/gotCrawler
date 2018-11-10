@@ -44,7 +44,7 @@ class Season:
         return self.__list_episodes
 
     def __set_list_episodes(self, list_episodes: List[Episode]):
-        if type(list_episodes) is not List[Episode] and list_episodes is not None:
+        if type(list_episodes) is not list and list_episodes is not None:
             raise TypeError("Episodes list must be a list of episodes")
         else:
             self.__list_episodes = list_episodes
@@ -80,10 +80,13 @@ class Season:
             self.__overview = overview
 
     def to_json(self):
+        result_list = []
+        for episode in self.list_episodes:
+            result_list.append(episode.to_json())
         return {
             "id_show": self.id_show,
             "num_season": self.num_season,
-            "list_episodes": self.list_episodes,
+            "list_episodes": result_list,
             "name": self.name,
             "poster": "https://image.tmdb.org/t/p/w1280"+self.poster,
             "overview": self.overview
