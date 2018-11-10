@@ -19,7 +19,7 @@
 
     export default {
         name: "LandingPage",
-        components: {ShowCardMinimal},
+        components: { ShowCardMinimal},
         data(){
             return{
             }
