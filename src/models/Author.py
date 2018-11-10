@@ -18,3 +18,9 @@ class Author(Person):
             raise TypeError("The attribute role of Author should be a string.")
         else:
             self.__role = role
+
+    def to_json(self):
+        return {
+            "name": self.name,
+            "role": self.role
+        }

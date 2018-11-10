@@ -40,7 +40,7 @@ class ApiHelperTMDB(ApiHelper):
         json = self._get("tv/{}/season/{}", (show_id, season_number))
         if json is None:
             raise ErrorSeasonDoesNotExist()
-        return self._api_json_to_season(json, show_id)
+        return self._api_json_to_season(json, int(show_id))
 
     def get_episode(self, show_id: int, season_number: int, episode_number: int):
         json = self._get("tv/{}/season/{}/episode/{}", (show_id, season_number, episode_number))
@@ -121,7 +121,7 @@ class ApiHelperTMDB(ApiHelper):
         ]
         print(episode_json)
         list_author = [
-            self._api_json_to_author(author_json) for author_json in episode_json["author_json"]
+            self._api_json_to_author(author_json) for author_json in episode_json["crew"]
         ]
         return Episode(name, num_season, num_ep, summary, list_actor, list_author)
 

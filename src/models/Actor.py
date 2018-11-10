@@ -18,3 +18,12 @@ class Actor(Person):
             raise TypeError("The attribute pict of Actor should be a string.")
         else:
             self.__pict = pict
+
+    def to_json(self):
+        address = ""
+        if self.pict is not None:
+            address = "https://image.tmdb.org/t/p/w1280"+self.pict
+        return {
+            "name": self.name,
+            "pict": address
+        }
