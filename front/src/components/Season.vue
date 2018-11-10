@@ -70,18 +70,20 @@
         },
         methods: {
             init() {
-                console.log("show/" + this.id_show + "/season/" + this.num_season);
                 api.get("show/" + this.id_show + "/season/" + this.num_season)
                     .then((res) => {
-                        console.log(res);
                         this.episode_list = res.list_episodes;
                         this.name = res.name;
                         this.overview = res.overview;
                         this.poster = res.poster;
-                        console.log(this.episode_list);
                     })
                     .catch((err) => console.log(err));
             }
+        }, watch: {
+            num_season: function () {
+                this.init()
+            },
+
         }
     }
 </script>
