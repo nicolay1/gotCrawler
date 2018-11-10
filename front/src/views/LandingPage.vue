@@ -1,32 +1,50 @@
 <template>
     <b-container>
-        <b-row>
-            <b-col cols="3" v-for="(show,index) in list_preference" :key="index">
-                <show-card-minimal :title="show.title"
-                           :overview="show.overview"
-                           :pict="show.pict"
-                           :date_next_ep="show.date_next_ep"
-                           :show_id="show.api_id"
-                           :state="show.state"
-                ></show-card-minimal>
-            </b-col>
-        </b-row>
+        <list-preferences :list_preferences="list_preferences" v-on:changestatus="changestatus"></list-preferences>
+        <search-bar :list_preferences="list_preferences" v-on:changestatus="changestatus"></search-bar>
     </b-container>
 </template>
 
 <script>
-    import ShowCardMinimal from "../components/ShowCardMinimal.vue";
+
+    import ListPreferences from "../components/ListPreferences.vue";
+    import api from "../helpers/api.js"
+    import SearchBar from "../components/SearchBar.vue";
+
 
     export default {
         name: "LandingPage",
-        components: { ShowCardMinimal},
-        data(){
-            return{
+        components: {SearchBar, ListPreferences, ShowCardMinimal},
+        created() {
+            this.init();
+        },
+        data() {
+            return {
+                list_preferences: [],
+                id_user:3
             }
         },
-        props: {
-            list_preference: {type: Array},
-        }
+        methods: {
+            init() {
+                api.get("user/"+this.id_user.toString()+"/pref")
+                    .then((list_pref) => {
+                        this.list_preferences = list_pref.map((pref) => {
+                            return {
+                                title: pref.title,
+                                overview: pref.overview,
+                                pict: pref.pict,
+                                date_next_ep: pref.date_next_ep ? Date(pref.date_next_ep) : null,
+                                api_id: pref.api_id,
+                                state: 1,
+                            }
+                        });
+                    })
+            },
+            changestatus(event) {
+                this.init();
+            }
+        },
+
     }
 </script>
 
