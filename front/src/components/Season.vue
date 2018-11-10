@@ -12,12 +12,12 @@
                     {{name}}
                 </div>
                 <div class="expand-icon toggle-button" v-b-toggle.num_season>
-                    <span class="expand-icon-text d-none d-sm-inline">Voir plus</span>
+                    <span class="expand-icon-text d-none d-sm-inline ">Voir plus</span>
                     <font-awesome-icon icon="angle-down" size="1x"/>
                 </div>
             </div>
         </div>
-        <b-collapse id="num_season">
+        <b-collapse visible id="num_season">
             <div class="card-body">
                 <p>{{overview}}</p>
                 <div class="separator"></div>
@@ -25,12 +25,12 @@
                     <span class="toggle-button" v-b-toggle.episodesList>Épisodes <font-awesome-icon icon="angle-down"
                                                                                                    size="1x"/></span>
                 </div>
-                <b-collapse class="episodes-collapse" id="episodesList">
+                <b-collapse class="episodes-collapse " id="episodesList">
                     <Episode
                             v-for="(episode, index) in episode_list"
                             :key="index"
                             :ep_number="episode.num_ep"
-                            :name="episode.name"
+                            :title="episode.name"
                             :overview="episode.summary"
                             :authors="episode.list_author"
                             :actors="episode.list_actor"

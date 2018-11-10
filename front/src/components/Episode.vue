@@ -11,24 +11,30 @@
                 <div class="col-lg-7 col-md-6 title">
                     {{title}}
                 </div>
-                <div class="expand-icon toggle-button" v-b-toggle.ep_number>
-                    <span class="expand-icon-text d-none d-sm-inline">Voir plus</span><font-awesome-icon  icon="angle-down" size="1x"/>
-                </div>
+                <b-btn @click="showCollapse = !showCollapse"
+                       :class="showCollapse ? 'collapsed' : null"
+                       :aria-controls="ep_number.toString()"
+                       :aria-expanded="showCollapse ? 'true' : 'false'"><span
+                        class="expand-icon-text d-none d-sm-inline">Voir plus</span>
+                    <font-awesome-icon icon="angle-down" size="1x"/>
+                </b-btn>
             </div>
         </div>
-        <b-collapse id="ep_number">
+        <b-collapse :id="ep_number.toString()" v-model="showCollapse">
             <div class="card-body">
                 <p>{{overview}}</p>
                 <div class="separator"></div>
                 <div>
-                    <span class="toggle-button" v-b-toggle.crewList >Équipe technique <font-awesome-icon icon="angle-down" size="1x"/></span>
-                    <span class="toggle-button" v-b-toggle.actorList >Liste des acteurs <font-awesome-icon icon="angle-down" size="1x"/></span>
+                    <span class="toggle-button" v-b-toggle.crewList>Équipe technique <font-awesome-icon
+                            icon="angle-down" size="1x"/></span>
+                    <span class="toggle-button" v-b-toggle.actorList>Liste des acteurs <font-awesome-icon
+                            icon="angle-down" size="1x"/></span>
                 </div>
-                <b-collapse class="crew-actor-collapse" id="crewList" >
-                    <AuthorList :authors=authors />
+                <b-collapse class="crew-actor-collapse" id="crewList">
+                    <author-list :authors=authors></author-list>
                 </b-collapse>
-                <b-collapse class="crew-actor-collapse" id="actorList" >
-                    <ActorList :actors=actors />
+                <b-collapse class="crew-actor-collapse" id="actorList">
+                    <actor-list :actors=actors></actor-list>
                 </b-collapse>
             </div>
         </b-collapse>
@@ -53,43 +59,56 @@
             overview: String,
             authors: Array,
             actors: Array,
+        },
+        data() {
+            return {
+                showCollapse: false
+            }
         }
     }
 </script>
 
 <style scoped>
 
+    .episode-card{margin-top: 10px;}
+
     .episode-card-header {
         text-align: center;
         position: relative;
     }
-    .episode-card .expand-icon{
+
+    .episode-card .expand-icon {
         position: absolute;
         bottom: calc(-1.25rem + 2px);
         right: calc(-.75rem + 2px);
     }
-    .episode-card .expand-icon-text{
+
+    .episode-card .expand-icon-text {
         position: relative;
-        margin-right:5px;
+        margin-right: 5px;
     }
-    .episode-card img{
+
+    .episode-card img {
         max-height: 100px;
     }
-    .episode-card .separator{
+
+    .episode-card .separator {
         width: 100%;
         padding: 0;
         margin: 10px 0px;
-        border-top: 1px solid rgba(0,0,0,.125);
+        border-top: 1px solid rgba(0, 0, 0, .125);
         height: 0;
         margin-bottom: 15px;
     }
-    .episode-card .toggle-button{
+
+    .episode-card .toggle-button {
         background-color: #eee;
         cursor: pointer;
         padding: 5px;
-        margin:5px;
+        margin: 5px;
     }
-    .episode-card .crew-actor-collapse{
-        margin-top:10px;
+
+    .episode-card .crew-actor-collapse {
+        margin-top: 10px;
     }
 </style>

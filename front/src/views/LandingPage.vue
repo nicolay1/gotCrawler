@@ -1,5 +1,6 @@
 <template>
     <b-container>
+        <season :id_show=1399 :num_season=2></season>
         <b-row>
             <b-col cols="3" v-for="(show,index) in list_preference" :key="index">
                 <show-card-minimal :title="show.title"
@@ -16,10 +17,11 @@
 
 <script>
     import ShowCardMinimal from "../components/ShowCardMinimal.vue";
+    import Season from "../components/Season.vue";
 
     export default {
         name: "LandingPage",
-        components: {ShowCardMinimal},
+        components: {Season, ShowCardMinimal},
         data(){
             return{
             }
