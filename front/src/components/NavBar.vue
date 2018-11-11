@@ -4,7 +4,7 @@
         <b-navbar-brand class="logo" v-on:click="backToRoot">My Show Notifier</b-navbar-brand>
         <b-collapse is-nav id="nav_collapse">
             <b-navbar-nav class="ml-auto">
-                <list-notifications></list-notifications>
+                <list-notifications v-if="user.connected()" :id_user="user.id"></list-notifications>
                 <b-nav-item v-if="!user.connected()" right v-on:click="connectUser">Connexion</b-nav-item>
                 <b-nav-item v-if="user.connected()" right v-on:click="disconnectUser">Déconnexion</b-nav-item>
                 <b-nav-item v-if="!user.connected()" right v-on:click="disconnectUser">Inscription</b-nav-item>
@@ -39,6 +39,9 @@
             backToRoot(){
                 this.$router.push('/');
             }
+        },
+        mounted(){
+            console.log("user id:", this.user.id)
         }
     }
 </script>

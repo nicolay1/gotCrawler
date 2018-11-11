@@ -82,11 +82,11 @@ class Preference:
         id_user, id_show, seen_flag, new_id = preference_res[0]
         return Preference(id_user=id_user, id_show=id_show, seen_flag=seen_flag, new_id=new_id)
 
-    def update_preference_in_bdd(self, my_db: MyDBConnection, seen_flag: int):
-        if seen_flag is not None:
-            self.__set_seen_flag(seen_flag)
-        my_db.exec_one("UPDATE NOTIFICATION SET id_user=(?), id_show=(?), seen_flag=(?), WHERE id=(?)",
-                       (self.id_user, self.id_show, self.seen_flag, self.id)
+    def update_preference_seen_flag_in_bdd(self, my_db: MyDBConnection, seen_flag: int):
+        if seen_flag is None:
+            raise ValueError("seen_flag cannot be None")
+        my_db.exec_one("UPDATE preference SET seen_flag=(?) WHERE id=(?)",
+                       (seen_flag, self.id)
                        )
 
     def delete_preference_in_bdd(self, my_db: MyDBConnection):

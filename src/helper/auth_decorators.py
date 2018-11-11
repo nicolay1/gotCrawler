@@ -52,6 +52,7 @@ and should have an 'id' key", flask.request)
 
         # finaly we check that the id of the jwt owner is the same than the
         # user_id requested to retrieve a user ressource.
+        print("Forbidden resource access: is {} but wanted {}".format(int(flask.request.user["id"]), int(kws["user_id"])))
         if int(flask.request.user["id"]) != int(kws["user_id"]):
             flask.abort(flask.Response(response="You do not have access to this ressource", status=401))
 

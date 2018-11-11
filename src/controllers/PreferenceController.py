@@ -21,8 +21,8 @@ class PreferenceController:
             preference.create_preference_in_bdd(my_db)
 
     @classmethod
-    def update_preference(cls, my_db: MyDBConnection, preference: Preference, show: Show, seen_flag):
-        preference.update_preference_in_bdd(my_db=my_db, seen_flag=seen_flag)
+    def update_preference_seen_flag(cls, my_db: MyDBConnection, preference: Preference, seen_flag):
+        preference.update_preference_seen_flag_in_bdd(my_db, seen_flag)
 
     @staticmethod
     def delete_preference(my_db: MyDBConnection, preference: Preference):

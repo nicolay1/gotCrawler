@@ -3,7 +3,7 @@ from flask import Flask
 from flask_restful import Resource, Api
 from flask_cors import CORS
 
-from src.ressources import UserGet, UserAdd, UserPref, SeasonGet, EpisodeGet, ShowGet, ShowSearch, AuthUser, AuthRenew
+from src.ressources import UserGet, UserAdd, UserPref, UserPrefDelPut, SeasonGet, EpisodeGet, ShowGet, ShowSearch, AuthUser, AuthRenew
 
 class GotCrawlerApp:
     """
@@ -21,6 +21,7 @@ class GotCrawlerApp:
         self.api.add_resource(UserGet, '/user/<user_id>')
         self.api.add_resource(UserAdd, '/user')
         self.api.add_resource(UserPref, '/user/<user_id>/pref')
+        self.api.add_resource(UserPrefDelPut, '/user/<user_id>/pref/<show_id>')
 
         self.api.add_resource(ShowGet, '/show/<api_id>')
         self.api.add_resource(ShowSearch, '/show/search')

@@ -32,11 +32,12 @@ class ApiHelper {
                  )
                 .then((res) => resolve(res.data))
                 .catch((err) => push_notif_err(err))
+            )
     }
-    post(resourcePath, params, enforceAuth=false){
-        if(!enforceAuth || enforceAuth===this.checkAuth())
+    post(resourcePath, params, enforceAuth=false) {
+        if (!enforceAuth || enforceAuth === this.checkAuth())
             return new Promise(
-                (resolve,reject) => axios.post(
+                (resolve, reject) => axios.post(
                     this.__backUrl + resourcePath, {
                         params,
                         headers: {
@@ -44,10 +45,11 @@ class ApiHelper {
                         }
                     }
                 )
-                .then((res) => resolve(res.data))
-                .catch((err) => push_notif_err(err))
+                    .then((res) => resolve(res.data))
+                    .catch((err) => push_notif_err(err))
             )
-    put(ressourcePath, params) {
+    }
+    put(ressourcePath, params, enforceAuth=false) {
         if(!enforceAuth || enforceAuth===this.checkAuth())
             return new Promise(
                 (resolve, reject) => axios.put(
@@ -63,12 +65,11 @@ class ApiHelper {
                 .catch((err) => push_notif_err(err))
             )
     }
-    delete(resourcePath, params, enforceAuth=false){
+    delete(resourcePath, enforceAuth=false){
         if(!enforceAuth || enforceAuth===this.checkAuth())
             return new Promise(
                 (resolve,reject) => axios.delete(
                     this.__backUrl + resourcePath, {
-                        params,
                         headers: {
                             Authorization: this.__jwt.bearerToken()
                         }
