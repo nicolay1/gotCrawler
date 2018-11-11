@@ -38,8 +38,7 @@ class ApiHelper {
         if (!enforceAuth || enforceAuth === this.checkAuth())
             return new Promise(
                 (resolve, reject) => axios.post(
-                    this.__backUrl + resourcePath, {
-                        params,
+                    this.__backUrl + resourcePath, params, {
                         headers: {
                             Authorization: this.__jwt.bearerToken()
                         }

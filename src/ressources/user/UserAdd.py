@@ -22,11 +22,11 @@ class UserAdd(Resource):
         posted_data = request.get_json()
         try:
             new_user = UserController.add_user(
-                posted_data["params"]["firstname"],
-                posted_data["params"]["surname"],
-                posted_data["params"]["login"],
-                posted_data["params"]["pwd"],
-                posted_data["params"]["poster"],
+                posted_data["firstname"],
+                posted_data["surname"],
+                posted_data["login"],
+                posted_data["pwd"],
+                posted_data["poster"],
                 my_db)
         except ErrorUserAlreadyExist:
             return ErrorUserAlreadyExist.flask_desc_code()
