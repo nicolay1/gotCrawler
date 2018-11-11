@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `show` (
 );
 -- populate show
 INSERT INTO show (id, pict, title, season_next_episode_num, next_episode_num, next_episode_date, api_id) VALUES 
-(1,'/gwPSoYUHAKmdyVywgLpKKA4BjRr.jpg', 'Game of Thrones', 8, 1, '2019-04-14 14:00:00',1402),
+(1,'/gwPSoYUHAKmdyVywgLpKKA4BjRr.jpg', 'Le trône de fer', 8, 1, '2019-04-01 14:00:00',1402),
 (2,'/zQsEi6096L7PvowV39dtdqdW16f.jpg','Twin Peaks', NULL, NULL, NULL, 1920);
 
 

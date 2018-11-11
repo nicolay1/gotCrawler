@@ -1,3 +1,3 @@
 . venv/bin/activate
-python main.py
+GC_ENV_TYPE=dev python main.py
 deactivate

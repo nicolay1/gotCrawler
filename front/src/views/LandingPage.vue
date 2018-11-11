@@ -11,7 +11,6 @@
     import ListPreferences from "../components/ListPreferences.vue";
     import api from "../helpers/api.js"
     import SearchBar from "../components/SearchBar.vue";
-    import ShowCardMinimal from "../components/ShowCardMinimal.vue";
     import User from '../helpers/user.js'
 
 
