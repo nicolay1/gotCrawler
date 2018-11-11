@@ -80,13 +80,10 @@ class Season:
             self.__overview = overview
 
     def to_json(self):
-        result_list = []
-        for episode in self.list_episodes:
-            result_list.append(episode.to_json())
         return {
             "id_show": self.id_show,
             "num_season": self.num_season,
-            "list_episodes": result_list,
+            "list_episodes": [episode.to_json() for episode in self.list_episodes] if self.list_episodes else None,
             "name": self.name,
             "poster": "https://image.tmdb.org/t/p/w1280"+self.poster,
             "overview": self.overview
