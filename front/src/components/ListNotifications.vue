@@ -4,7 +4,7 @@
         </template>
         <b-dropdown-item id="notificationslist">
             <notification v-for="(show, index) in notif_list"
-                    :key="index" :show="show" :name="show.api_id" :user_id="3" v-on:notificationacknowledged="init"></notification>
+                    :key="index" :show="show" :name="show.api_id" :user_id="id_user" v-on:notificationacknowledged="init"></notification>
         </b-dropdown-item>
     </b-nav-item-dropdown>
 </template>
@@ -16,10 +16,11 @@
     export default {
         name: "ListNotifications",
         components: {Notification},
-        props: {},
+        props: {
+            id_user: Number
+        },
         data() {
             return {
-                id_user: 3,
                 notif_list: [],
                 nombre_notif:null
             }
@@ -29,6 +30,7 @@
         },
         methods: {
             init() {
+                console.log(this.id_user)
                 api.get("user/" + this.id_user + "/pref").then(
                     (res) => {
                         this.notif_list = res.filter((show) => {

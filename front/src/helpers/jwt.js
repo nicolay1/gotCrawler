@@ -31,7 +31,7 @@ export default class Jwt{
     }
 
     bearerToken(){
-        return this.__jwtToken ? `Bearer ${this.jwtToken}` : ""
+        return this.__jwtToken ? `Bearer ${this.__jwtToken}` : ""
     }
 
     exist(){

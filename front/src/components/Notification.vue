@@ -14,7 +14,7 @@
         },
         methods:{
             acknowledgeNotifications(){
-                api.put("user/"+this.user_id+"/show",{show_id:this.show.id, new_seen_flag:1}).then((res)=>this.$emit('notificationAcknowledged'))
+                api.put("user/"+this.user_id+"/pref/"+this.show.id,{new_seen_flag:1}).then((res)=>this.$emit('notificationAcknowledged'))
             }
         }
     }
