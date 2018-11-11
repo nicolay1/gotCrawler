@@ -6,9 +6,8 @@
             </em>
         </template>
         <b-dropdown-item v-if="nombre_notif" id="notificationslist">
-            <notification v-for="(show, index) in notif_list"
-                          :key="index" :show="show" :name="show.api_id" :user_id="id_user"
-                          v-on:notificationAcknowledged="init"></notification>
+            <notification v-for="(show) in notif_list"
+                    :key="show.api_id" :show="show" :name="show.api_id" :user_id="id_user" v-on:notificationAcknowledged="init"></notification>
         </b-dropdown-item>
         <b-dropdown-item v-else><p>Vous n'avez pas de notifications!</p></b-dropdown-item>
     </b-nav-item-dropdown>

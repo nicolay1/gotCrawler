@@ -67,14 +67,6 @@
 
     export default {
         name: 'Show',
-
-
-
-        data() {
-            return {
-
-            }
-        },
         props: {
             id: Number,
             formated_date_next_ep: String,

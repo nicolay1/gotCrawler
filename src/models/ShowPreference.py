@@ -127,7 +127,7 @@ class ShowPreferences:
             "next_ep_num": self.next_ep_num,
             #TODO quand la méthode get_show_preferences_from_user est corrigé !! "next_ep_date": datetime_to_str(self.next_ep_date),
             "next_ep_date": self.next_ep_date,
-            "next_season_num": self.next_ep_num,
+            "next_season_num": self.next_season_num,
             "title": self.title,
             "new_ep_acknoweldged": self.new_ep_acknoweldged
         }

@@ -31,7 +31,7 @@
                         .then(() => {
                             this.data_state = 1;
                             this.$parent.$parent.$emit('changestatus', [this.show_id, this.data_state]);
-
+                            location.reload();
 
                         })
                         .catch((err) => console.log(err))
@@ -43,7 +43,7 @@
                         .then(() => {
                             this.data_state = 0;
                             this.$parent.$parent.$emit('changestatus', [this.show_id, this.data_state]);
-
+                            location.reload();
                         })
                         .catch((err) => console.log(err))
 
