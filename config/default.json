@@ -1,4 +1,5 @@
 {
     "tmdb_api_root":"https://api.themoviedb.org/3/",
-    "tmdb_api_language":"fr-CA"
+    "tmdb_api_language":"fr-CA",
+    "db_path":"db/gotCrawler.db"
 }

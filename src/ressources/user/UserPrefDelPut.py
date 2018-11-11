@@ -3,6 +3,7 @@ from flask import request
 from src.controllers.UserController import UserController
 from src.controllers.PreferenceController import PreferenceController
 from src.controllers.ShowController import ShowController
+from src.config import CONFIG
 
 from src.db.MyDBConnection import MyDBConnection
 
@@ -13,7 +14,7 @@ class UserPrefDelPut(UserRessource):
         Get a user preferences
     """
     def delete(self, user_id: int, show_id: int):
-        my_db = MyDBConnection("db/gotCrawler.db")
+        my_db = MyDBConnection(CONFIG["db_path"])
 
         user_id = int(user_id)
         show_id = int(show_id)
@@ -39,7 +40,7 @@ class UserPrefDelPut(UserRessource):
         return "ok"
 
     def put(self, user_id: int, show_id: int):
-        my_db = MyDBConnection("db/gotCrawler.db")
+        my_db = MyDBConnection(CONFIG["db_path"])
 
         user_id = int(user_id)
         show_id = int(show_id)

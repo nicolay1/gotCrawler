@@ -213,6 +213,24 @@ class Show:
         
         return Show(title, pict, api_id, season_next_episode_num, next_episode_num, str_to_datetime(next_episode_date), str_to_datetime(last_maj), db_id)
 
+    @staticmethod
+    def get_all_with_a_pref(my_db: MyDBConnection):
+        show_list = []
+        list_shows_in_bdd = my_db.exec_one("""
+            SELECT DISTINCT pict, last_maj, title, season_next_episode_num, next_episode_date, next_episode_num, api_id, show.id 
+            FROM `show` JOIN preference
+            WHERE preference.id_show = show.api_id""")
+        if not list_shows_in_bdd:
+            return None
+        else:
+            for show_res in list_shows_in_bdd:
+                pict, last_maj, title, season_next_episode_num, next_episode_date, next_episode_num, api_id, db_id = show_res
+                show_list.append(
+                    Show(title, pict, api_id, season_next_episode_num, next_episode_num,
+                         str_to_datetime(next_episode_date), str_to_datetime(last_maj), db_id)
+                )
+        return show_list
+
     def to_json(self):
         return {
             "title": self.title,

@@ -5,6 +5,9 @@ from flask_cors import CORS
 
 from src.ressources import UserGet, UserAdd, UserPref, UserPrefDelPut, SeasonGet, EpisodeGet, ShowGet, ShowSearch, AuthUser, AuthRenew
 from src.ressources.show import ShowTrending
+
+from src.notification_manager.NotificationManager import NotificationManager
+
 class GotCrawlerApp:
     """
         This is the flask app 
@@ -13,6 +16,8 @@ class GotCrawlerApp:
         self.app = Flask(__name__)
         CORS(self.app)
         self.api = Api(self.app)
+        self.notification_manager = NotificationManager()
+        self.notification_manager.start()
 
     def _initialize(self):
         self.api.add_resource(AuthUser, '/auth')

@@ -6,13 +6,15 @@ from src.errors import ErrorUserDoesNotExist
 
 from .User import UserRessource
 
+from src.config import CONFIG
+
 class UserGet(UserRessource):
     """
         Get a user
     """
 
     def get(self, user_id):
-        my_db = MyDBConnection("db/gotCrawler.db")
+        my_db = MyDBConnection(CONFIG["db_path"])
         try:
             user = UserController.get_one_from_id(int(user_id), my_db)
         except ErrorUserDoesNotExist:

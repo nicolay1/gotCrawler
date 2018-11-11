@@ -10,6 +10,8 @@ from src.ressources.auth import AuthUser
 
 from src.errors import ErrorUserAlreadyExist
 
+from src.config import CONFIG
+
 class UserAdd(Resource):
     """
         Signup a user
@@ -18,7 +20,7 @@ class UserAdd(Resource):
     method_decorators = [authentication_required]
 
     def post(self):
-        my_db = MyDBConnection("db/gotCrawler.db")
+        my_db = MyDBConnection(CONFIG["db_path"])
         posted_data = request.get_json()
         try:
             new_user = UserController.add_user(

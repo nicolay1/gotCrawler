@@ -85,7 +85,7 @@ class MyDBConnection:
         # we execute the query and fetch the result
         if type(args) is int or type(args) is float:
             args = tuple([args])
-        print("query '{}', is exectuded with ({}) args".format(query, args))
+        # print("query '{}', is exectuded with ({}) args".format(query, args))
 
         # we retrieve the cursor ready to execute the query
         query_result_cursor = cursor.execute(query, args)

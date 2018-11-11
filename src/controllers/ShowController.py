@@ -59,14 +59,16 @@ class ShowController:
 
     @classmethod
     def check_for_update(cls, my_db: MyDBConnection, show: Show):
-        if (datetime.now() - show.last_maj).seconds > 3600:
-            # the last update is too old, we update the show in API in DB.
-            updated_show = ApiHelperTMDB().get_show(show.api_id)
-            cls.update_show(my_db, show, updated_show)
+        updated_show = ApiHelperTMDB().get_show(show.api_id)
+        cls.update_show(my_db, show, updated_show)
 
     @classmethod
     def list_all_seasons(cls, show: Show):
         return show.season_list
+
+    @staticmethod
+    def get_all_with_a_pref(my_db: MyDBConnection):
+        return Show.get_all_with_a_pref(my_db)
 
     @classmethod
     def add_show(cls, my_db: MyDBConnection, title: str, pict: str, api_id: int, season_next_episode_num: int,

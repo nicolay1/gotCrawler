@@ -5,6 +5,7 @@ from src.controllers.PreferenceController import PreferenceController
 from src.controllers.ShowController import ShowController
 
 from src.db.MyDBConnection import MyDBConnection
+from src.config import CONFIG
 
 from .User import UserRessource
 
@@ -15,7 +16,7 @@ class UserPref(UserRessource):
     """
 
     def get(self, user_id: int):
-        my_db = MyDBConnection("db/gotCrawler.db")
+        my_db = MyDBConnection(CONFIG["db_path"])
 
         # retrieve the user from the id
         user = UserController.get_one_from_id(user_id, my_db)

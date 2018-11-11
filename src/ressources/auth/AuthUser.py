@@ -30,7 +30,7 @@ class AuthUser(Resource):
         )
 
     def post(self):
-        my_db = MyDBConnection("db/gotCrawler.db")
+        my_db = MyDBConnection(CONFIG["db_path"])
         posted_data = request.get_json()
         user = UserController.get_one_from_cred(
             posted_data["login"],

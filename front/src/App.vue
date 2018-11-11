@@ -8,7 +8,6 @@
         <router-view>
 
         </router-view>
-        <list-notifications></list-notifications>
 
         <footer-nav></footer-nav>
     </div>

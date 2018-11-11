@@ -3,7 +3,6 @@ import Jwt from './jwt'
 export default class User{
     constructor(){
         this.__user = (new Jwt()).user;
-        console.log("using user :", this.__user);
     }
 
     get id(){
