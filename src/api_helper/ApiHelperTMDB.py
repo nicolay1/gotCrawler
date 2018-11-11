@@ -28,7 +28,10 @@ class ApiHelperTMDB(ApiHelper):
         )
 
     def get_trending(self, page=1):
-        return self._get("trending/tv/week", None, {"page": page})
+        json = self._get("trending/tv/week", None, {"page": page})
+        if json is None:
+            raise ErrorShowDoesNotExist()
+        return self._api_json_search_to_show_list(json)
 
     def get_show(self, show_id: int):
         json = self._get("tv/{}", (show_id))
@@ -64,7 +67,8 @@ class ApiHelperTMDB(ApiHelper):
             overview = show_json["overview"]
             show = Show(title=title, pict=pict, api_id=api_id, season_next_episode_num=None,
                         next_episode_num=None, date_next_episode=None,
-                        last_maj=datetime.now().replace(microsecond=0), db_id=None, season_list=None, number_of_episodes=None,
+                        last_maj=datetime.now().replace(microsecond=0), db_id=None, season_list=None,
+                        number_of_episodes=None,
                         number_of_seasons=None, overview=overview)
             show_list.append(show)
         return show_list
