@@ -72,7 +72,10 @@
                 api.get('show/' + this.id)
                     .then((res) => {
                         this.show = res;
-                        this.formated_date_next_ep = new Date(res.date_next_episode).toLocaleDateString() ? new Date(res.date_next_episode).toLocaleDateString() : null;
+                        this.formated_date_next_ep = new Date(res.date_next_episode)
+                            .toLocaleDateString()
+                            ? new Date(res.date_next_episode).toLocaleDateString('fr-FR',{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+                            : null;
                         this.season_list = res.season_list;
                     })
                     .catch((err) => console.log(err));

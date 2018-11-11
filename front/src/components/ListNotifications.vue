@@ -4,7 +4,7 @@
         </template>
         <b-dropdown-item id="notificationslist">
             <notification v-for="(show, index) in notif_list"
-                    :key="index" :show="show" :name="show.api_id" :user_id="id_user" v-on:notificationacknowledged="init"></notification>
+                    :key="index" :show="show" :name="show.api_id" :user_id="id_user" v-on:notificationAcknowledged="init"></notification>
         </b-dropdown-item>
     </b-nav-item-dropdown>
 </template>

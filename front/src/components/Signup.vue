@@ -76,11 +76,12 @@
         methods: {
             onSubmit (evt) {
                 evt.preventDefault();
-                apiHelper.post('user', this.form, true)
+                apiHelper.post('user', this.form)
                     .then(
                         (jwtToken) => {
                             push_notif_success("Votre inscription a bien été prise en compte, bienvenue !")
                             window.localStorage.setItem("jwtToken", jwtToken)
+                            window.location = "/"
                         }
                     )
             }

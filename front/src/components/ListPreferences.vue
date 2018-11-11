@@ -1,6 +1,6 @@
 <template>
     <b-row>
-            <b-card-group  deck class="col-4" v-for="(show,index) in list_preferences" :key="index">
+            <b-card-group  deck class="col-4" v-for="(show) in list_preferences" :key="show.api_id">
                 <show-card-minimal :title="show.title"
                                    :overview="show.overview"
                                    :pict="show.pict"

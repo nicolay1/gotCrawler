@@ -7,7 +7,7 @@
                 <list-notifications v-if="user.connected()" :id_user="user.id"></list-notifications>
                 <b-nav-item v-if="!user.connected()" right v-on:click="connectUser">Connexion</b-nav-item>
                 <b-nav-item v-if="user.connected()" right v-on:click="disconnectUser">Déconnexion</b-nav-item>
-                <b-nav-item v-if="!user.connected()" right v-on:click="disconnectUser">Inscription</b-nav-item>
+                <b-nav-item v-if="!user.connected()" right v-on:click="signupUser">Inscription</b-nav-item>
             </b-navbar-nav>
         </b-collapse>
     </b-navbar>
@@ -38,11 +38,11 @@
             },
             backToRoot(){
                 this.$router.push('/');
+            },
+            signupUser(){
+                this.$router.push('/signup');
             }
         },
-        mounted(){
-            console.log("user id:", this.user.id)
-        }
     }
 </script>
 <style scoped>
