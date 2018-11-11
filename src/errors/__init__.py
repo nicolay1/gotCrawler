@@ -32,6 +32,14 @@ class ErrorUserDoesNotExist(GcErrorException):
     def flask_desc_code(args=None):
         return "Cet utilisateur n'existe pas.", 400
 
+class ErrorUserAlreadyExist(GcErrorException):
+    def __init__(self, message=""):
+        super().__init__(message)
+
+    @staticmethod
+    def flask_desc_code(args=None):
+        return "Erreur, un utilisateur avec le meme login existe deja.", 400
+
 class ErrorApiConnexionError(GcErrorException):
     def __init__(self, message=""):
         super().__init__(message)

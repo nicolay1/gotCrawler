@@ -1,2 +1,2 @@
-from .AuthUser import Authuser
+from .AuthUser import AuthUser
 from .AuthRenew import AuthRenew
