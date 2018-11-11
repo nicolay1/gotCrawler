@@ -1,11 +1,16 @@
 <template>
-    <b-nav-item-dropdown right>        <template slot="button-content">
-          <em>Notifications <b-badge variant="light">{{nombre_notif}}</b-badge></em>
+    <b-nav-item-dropdown right>
+        <template slot="button-content">
+            <em>Notifications
+                <b-badge variant="light">{{nombre_notif}}</b-badge>
+            </em>
         </template>
-        <b-dropdown-item id="notificationslist">
+        <b-dropdown-item v-if="nombre_notif" id="notificationslist">
             <notification v-for="(show, index) in notif_list"
-                    :key="index" :show="show" :name="show.api_id" :user_id="id_user" v-on:notificationacknowledged="init"></notification>
+                          :key="index" :show="show" :name="show.api_id" :user_id="id_user"
+                          v-on:notificationAcknowledged="init"></notification>
         </b-dropdown-item>
+        <b-dropdown-item v-else><p>Vous n'avez pas de notifications!</p></b-dropdown-item>
     </b-nav-item-dropdown>
 </template>
 
@@ -17,12 +22,12 @@
         name: "ListNotifications",
         components: {Notification},
         props: {
-            id_user: Number
+            id_user: Number,
         },
         data() {
             return {
                 notif_list: [],
-                nombre_notif:null
+                nombre_notif: null
             }
         },
         created() {
@@ -30,11 +35,10 @@
         },
         methods: {
             init() {
-                console.log(this.id_user)
                 api.get("user/" + this.id_user + "/pref").then(
                     (res) => {
                         this.notif_list = res.filter((show) => {
-                            return !show.new_ep_acknoweldged & (show.next_ep_date!=null);
+                            return !show.new_ep_acknoweldged & (show.next_ep_date != null);
                         }).map((show) => {
                             return {
                                 title: show.title,
@@ -44,7 +48,8 @@
                                 id: show.api_id
                             }
                         });
-                        this.nombre_notif=this.notif_list.length
+                        this.nombre_notif = this.notif_list.length
+
                     }
                 )
             }

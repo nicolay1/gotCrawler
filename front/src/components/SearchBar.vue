@@ -58,25 +58,19 @@
                 })
             }
         },
+        created(){
+            api.get('show/trending').then((res)=>{
+                this.show_list=this.merge_pref_with_search_results(res)
+            })
+        },
         data() {
-            // let show_list = [];
             return {
                 show_searched: "Game of Thrones...",
                 show_list: Array
 
-                // title: "Got",
-                // overview: "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de mise en page de texte, comme Aldus PageMaker.",
-                // pict: "https://www.wikichat.fr/wp-content/uploads/sites/2/Fotolia_99751581_S.jpg",
-                // date_next_ep: new Date(),
-                // show_id: 1295
             }
         },
         methods: {
-            // show_results(show_searched) {
-            //     console.log("coucou");
-            //     this.show_list = this.show_results_axios(show_searched);
-            //     console.log("coucou3");
-            // },
             merge_pref_with_search_results: function (show_list) {
                 return show_list.map((show) => {
                     show.state = this.listPreferencesId.includes(show.api_id) ? 1 : 0;

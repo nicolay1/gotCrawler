@@ -1,13 +1,14 @@
 <template>
     <div id="app">
         <nav-bar></nav-bar>
-        <notifications 
+        <notifications
                     position="top right"
                     :speed="500"
                     :duration="10000"/>
         <router-view>
 
         </router-view>
+        <list-notifications></list-notifications>
 
         <footer-nav></footer-nav>
     </div>
