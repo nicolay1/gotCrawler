@@ -12,6 +12,7 @@
     import api from "../helpers/api.js"
     import SearchBar from "../components/SearchBar.vue";
     import ShowCardMinimal from "../components/ShowCardMinimal.vue";
+    import User from '../helpers/user.js'
 
 
     export default {
@@ -23,24 +24,26 @@
         data() {
             return {
                 list_preferences: [],
-                id_user:3
+                user: new User()
             }
         },
         methods: {
             init() {
-                api.get("user/"+this.id_user.toString()+"/pref")
-                    .then((list_pref) => {
-                        this.list_preferences = list_pref.map((pref) => {
-                            return {
-                                title: pref.title,
-                                overview: pref.overview,
-                                pict: pref.pict,
-                                date_next_ep: pref.date_next_ep ? Date(pref.date_next_ep) : null,
-                                api_id: pref.api_id,
-                                state: 1,
-                            }
-                        });
-                    })
+                if(this.user.connected()) {
+                    api.get("user/" + this.user.id.toString() + "/pref")
+                        .then((list_pref) => {
+                            this.list_preferences = list_pref.map((pref) => {
+                                return {
+                                    title: pref.title,
+                                    overview: pref.overview,
+                                    pict: pref.pict,
+                                    date_next_ep: pref.date_next_ep ? Date(pref.date_next_ep) : null,
+                                    api_id: pref.api_id,
+                                    state: 1,
+                                }
+                            });
+                        })
+                }
             },
             changestatus(event) {
                 this.init();

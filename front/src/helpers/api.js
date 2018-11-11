@@ -2,94 +2,78 @@ import * as axios from 'axios'
 
 import config from '../../config'
 import {push_notif_err} from './notifs'
+import Jwt from './jwt'
 
 class ApiHelper {
     constructor() {
         this.__backUrl = config.backUrl
-        this.__jwtToken = null
+        this.__jwt = new Jwt()
     }
 
-    set jwtToken(jwtToken) {
-        if (jwtToken !== null) {
-            this.__jwtToken = jwtToken
-        }
-    }
-
-    get jwtToken() {
-        return this.__jwtToken
-    }
-
-    checkAuth() {
-        let jwtToken = localStorage.getItem('jwtToken');
-        if (jwtToken === null) {
-            // make auth
+    checkAuth(){
+        if(!this.__jwt.exist()){
+            push_notif_err("Vous devez vous authentifier pour acceder à cette ressource.")
             return false
-        } else {
-            this.jwtToken = jwtToken
+        }else{
+            return true
         }
     }
 
-    get(ressourcePath, params) {
-        this.checkAuth()
-        return new Promise(
-            (resolve, reject) => axios.get(
-                this.__backUrl + ressourcePath, {
-                    params,
-                    headers: {
-                        Authorization: `Bearer ${this.jwtToken}`
+    get(resourcePath, params, enforceAuth=false){
+        if(!enforceAuth || enforceAuth===this.checkAuth())
+            return new Promise(
+                (resolve,reject) => axios.get(
+                    this.__backUrl + resourcePath, {
+                        params,
+                        headers: {
+                            Authorization: this.__jwt.bearerToken()
+                        }
                     }
-                }
-            )
+                 )
                 .then((res) => resolve(res.data))
                 .catch((err) => push_notif_err(err))
-        )
     }
-
-    post(ressourcePath, params) {
-        this.checkAuth()
-        return new Promise(
-            (resolve, reject) => axios.post(
-                this.__backUrl + ressourcePath,
-                {
-                    params,
-                    headers: {
-                        Authorization: `Bearer ${this.jwtToken}`
+    post(resourcePath, params, enforceAuth=false){
+        if(!enforceAuth || enforceAuth===this.checkAuth())
+            return new Promise(
+                (resolve,reject) => axios.post(
+                    this.__backUrl + resourcePath, {
+                        params,
+                        headers: {
+                            Authorization: this.__jwt.bearerToken()
+                        }
                     }
-                }
-            )
+                )
                 .then((res) => resolve(res.data))
                 .catch((err) => push_notif_err(err))
-        )
-    }
-
+            )
     put(ressourcePath, params) {
-        this.checkAuth()
-        return new Promise(
-            (resolve, reject) => axios.put(
-                this.__backUrl + ressourcePath,
-                params,
-                {
-                    headers: {
-                        Authorization: `Bearer ${this.jwtToken}`
+        if(!enforceAuth || enforceAuth===this.checkAuth())
+            return new Promise(
+                (resolve, reject) => axios.put(
+                    this.__backUrl + ressourcePath,
+                    params,
+                    {
+                        headers: {
+                            Authorization: this.__jwt.bearerToken()
+                        }
                     }
-                }
-            )
+                )
                 .then((res) => resolve(res.data))
                 .catch((err) => push_notif_err(err))
-        )
-    }
-
-    delete(ressourcePath, params) {
-        this.checkAuth()
-        return new Promise(
-            (resolve, reject) => axios.delete(
-                this.__backUrl + ressourcePath, {
-                    params,
-                    headers: {
-                        Authorization: `Bearer ${this.jwtToken}`
-                    }
-                }
             )
+    }
+    delete(resourcePath, params, enforceAuth=false){
+        if(!enforceAuth || enforceAuth===this.checkAuth())
+            return new Promise(
+                (resolve,reject) => axios.delete(
+                    this.__backUrl + resourcePath, {
+                        params,
+                        headers: {
+                            Authorization: this.__jwt.bearerToken()
+                        }
+                    }
+                )
                 .then((res) => resolve(res.data))
                 .catch((err) => push_notif_err(err))
         )

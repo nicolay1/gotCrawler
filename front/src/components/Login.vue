@@ -29,6 +29,8 @@
 <script>
   import apiHelper from '../helpers/api.js';
   import {push_notif_success} from '../helpers/notifs.js'
+  import User from '../helpers/user.js'
+  import Jwt from '../helpers/jwt.js'
 
   export default {
         name: 'Login',
@@ -44,9 +46,20 @@
             onSubmit (evt) {
                 evt.preventDefault();
 
-                apiHelper.post('auth', this.form, true)
+                apiHelper.post('auth', this.form)
                     .then(
-                        (res) => this.$router.push("/")
+                        (jwtToken) => {
+                            // reset token
+                            let jwt = new Jwt();
+                            jwt.setToken(jwtToken);
+
+                            // update user
+                            let user = new User();
+                            push_notif_success(`Bienvenue, ${user.firstname} ${user.surname}`);
+
+                            // redirect to landing page with full refresh
+                           window.location = "/"
+                        }
                     )
             }
         }

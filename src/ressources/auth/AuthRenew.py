@@ -10,6 +10,7 @@ class AuthRenew(Resource):
     """
         Signup a user
     """
+
     def get(self):
         authorization_header = request.headers.get('Authorization')
 
