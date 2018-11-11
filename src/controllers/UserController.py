@@ -5,6 +5,8 @@ from src.models.Show import Show
 from src.models.Preference import Preference
 from src.models.ShowPreference import ShowPreferences
 
+from src.errors import ErrorUserAlreadyExist
+
 from src.db.MyDBConnection import MyDBConnection
 
 from .PreferenceController import PreferenceController
@@ -32,6 +34,9 @@ class UserController:
         if user is None:
             user = User(firstname, surname, login, pwd, poster, list_preferences)
             user.create_user_in_bdd(my_db)
+            return user
+        else:
+            raise ErrorUserAlreadyExist
 
     @staticmethod
     def update_user(user: User, my_db: MyDBConnection, firstname: str = None, surname: str = None,

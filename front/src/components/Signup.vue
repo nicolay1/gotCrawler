@@ -78,7 +78,10 @@
                 evt.preventDefault();
                 apiHelper.post('user', this.form, true)
                     .then(
-                        (res) => push_notif_success("Votre inscription a bien été prise en compte, bienvenue !")
+                        (jwtToken) => {
+                            push_notif_success("Votre inscription a bien été prise en compte, bienvenue !")
+                            window.localStorage.setItem("jwtToken", jwtToken)
+                        }
                     )
             }
         }

@@ -8,5 +8,5 @@ from .show import ShowSearch
 from .season import SeasonGet
 from .episode import EpisodeGet
 
-from .auth import Authuser
+from .auth import AuthUser
 from .auth import AuthRenew
