@@ -17,10 +17,10 @@ class UserAdd(Resource):
         my_db = MyDBConnection("db/gotCrawler.db")
         posted_data = request.get_json()
         UserController.add_user(
-            posted_data["firstname"],
-            posted_data["surname"],
-            posted_data["login"],
-            posted_data["pwd"],
-            posted_data["poster"],
+            posted_data["params"]["firstname"],
+            posted_data["params"]["surname"],
+            posted_data["params"]["login"],
+            posted_data["params"]["pwd"],
+            posted_data["params"]["poster"],
             my_db)
         return "ok"

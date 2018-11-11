@@ -16,8 +16,8 @@ class Authuser(Resource):
         my_db = MyDBConnection("db/gotCrawler.db")
         posted_data = request.get_json()
         user = UserController.get_one_from_cred(
-            posted_data["login"],
-            posted_data["pwd"],
+            posted_data["params"]["login"],
+            posted_data["params"]["pwd"],
             my_db
         )
         if user is not None:
