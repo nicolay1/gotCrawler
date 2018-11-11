@@ -9,26 +9,25 @@
 <script>
 
     import api from "../helpers/api.js"
-    import axios from "axios"
+    import User from "../helpers/user.js"
 
     export default {
         name: "ChangePreferenceStatus",
         props: {
             show_id: {type: Number, required: true},
-            state: {type: Number}
-
+            state: {type: Number},
         },
         data() {
             return {
-                data_state: this.state
-
+                data_state: this.state,
+                user: new User()
             }
         },
         methods: {
             ChangePref: function () {
                 if (this.data_state === 0) {
-                    axios
-                        .post('http://localhost:5000/user/3/pref', {show_id: this.show_id})
+                    api
+                        .post('user/'+this.user.id+'/pref', {show_id: this.show_id})
                         .then(() => {
                             this.data_state = 1;
                             this.$parent.$parent.$emit('changestatus', [this.show_id, this.data_state]);
@@ -39,8 +38,8 @@
 
                 }
                 else if (this.data_state === 1) {
-                    axios
-                        .delete('http://localhost:5000/user/3/pref',{data: {show_id: this.show_id}})
+                    api
+                        .delete('user/'+this.user.id+'/pref/'+this.show_id)
                         .then(() => {
                             this.data_state = 0;
                             this.$parent.$parent.$emit('changestatus', [this.show_id, this.data_state]);
