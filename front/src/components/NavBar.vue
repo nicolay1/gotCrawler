@@ -4,6 +4,7 @@
         <b-navbar-brand class="logo" v-on:click="backToRoot">My Show Notifier</b-navbar-brand>
         <b-collapse is-nav id="nav_collapse">
             <b-navbar-nav class="ml-auto">
+                <list-notifications></list-notifications>
                 <b-nav-item v-if="!user.connected()" right v-on:click="connectUser">Connexion</b-nav-item>
                 <b-nav-item v-if="user.connected()" right v-on:click="disconnectUser">Déconnexion</b-nav-item>
                 <b-nav-item v-if="!user.connected()" right v-on:click="disconnectUser">Inscription</b-nav-item>
@@ -13,10 +14,12 @@
 </template>
 
 <script>
-    import User from '../helpers/user'
+    import ListNotifications from "./ListNotifications.vue";
+    import User from '../helpers/user';
 
     export default {
         name: "NavBar",
+        components: {ListNotifications},
         props:{
         },
         data(){

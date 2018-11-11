@@ -8,10 +8,12 @@ from src.db.MyDBConnection import MyDBConnection
 
 from .User import UserRessource
 
+
 class UserPref(UserRessource):
     """
         Get a user preferences
     """
+
     def get(self, user_id: int):
         my_db = MyDBConnection("db/gotCrawler.db")
 
@@ -44,7 +46,28 @@ class UserPref(UserRessource):
         PreferenceController.add_preference(my_db, user, show, 0)
 
         return "ok"
-    
+
+    def put(self, user_id: int):
+        my_db = MyDBConnection("db/gotCrawler.db")
+        # retrieve the user from the id
+        user = UserController.get_one_from_id(user_id, my_db)
+        if user is None:
+            return "Error, this user does not exist"
+
+        posted_data = request.get_json()
+        show_id = posted_data["show_id"]
+        new_seen_flag = posted_data["new_seen_flag"]
+
+        show = ShowController.get_or_create_from_db_w_api_id(my_db, show_id);
+        if show is None:
+            return "Error, the API does not know this Show.", 500
+
+        preference = PreferenceController.get_one_w_api_id(my_db, user, show)
+
+        PreferenceController.update_preference(my_db, preference, show, new_seen_flag)
+
+        return "ok"
+
     def delete(self, user_id: int):
         my_db = MyDBConnection("db/gotCrawler.db")
 
@@ -54,7 +77,7 @@ class UserPref(UserRessource):
             return None
 
         delete_data = request.get_json()
-        show_id = delete_data["show_id"]
+        show_id = delete_data["params"]["show_id"]
 
         # get the show from the id
         show = ShowController.get_or_create_from_db_w_api_id(my_db, show_id)
@@ -63,7 +86,7 @@ class UserPref(UserRessource):
 
         try:
             PreferenceController.delete_preference(
-                my_db, 
+                my_db,
                 PreferenceController.get_one_w_api_id(my_db, user, show)
             )
         except ValueError as err:

@@ -59,13 +59,12 @@
                 season_list: [],
                 formated_date_next_ep: new Date().toLocaleDateString(),
                 show: {},
+                id:Number(this.$route.params.id)
             }
         },
         created() {
-            this.init()
-        },
-        props: {
-            id: Number,
+            this.init();
+
         },
 
         methods: {
