@@ -32,7 +32,6 @@
                         .then(() => {
                             this.data_state = 1;
                             this.$parent.$parent.$emit('changestatus', [this.show_id, this.data_state]);
-                            this.mounted();
 
 
                         })
@@ -45,7 +44,6 @@
                         .then(() => {
                             this.data_state = 0;
                             this.$parent.$parent.$emit('changestatus', [this.show_id, this.data_state]);
-                            this.mounted();
 
                         })
                         .catch((err) => console.log(err))
