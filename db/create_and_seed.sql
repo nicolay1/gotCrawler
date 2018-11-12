@@ -35,6 +35,6 @@ CREATE TABLE IF NOT EXISTS user (
 );
 -- populate user
 INSERT INTO user (id, surname, firstname, login, pwd, poster) VALUES 
-(1, 'Fley', 'Nicolas', 'stook', 'mymdp', ''),
-(2, 'Guibert', 'Rachel', 'shiva', 'mymdp', ''),
-(3, 'Chapuis', 'Amelie', 'amelie', 'mymdp', '');
+(1, 'Fley', 'Nicolas', 'nicolas', 'mymdp', 'https://www.freeiconspng.com/uploads/user-icon-png-person-user-profile-icon-20.png'),
+(2, 'Guibert', 'Rachel', 'rachel', 'mymdp', 'https://www.freeiconspng.com/uploads/user-icon-png-person-user-profile-icon-20.png'),
+(3, 'Chapuis', 'Amelie', 'amelie', 'mymdp', 'https://www.freeiconspng.com/uploads/user-icon-png-person-user-profile-icon-20.png');

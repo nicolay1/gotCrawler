@@ -6,6 +6,7 @@
             <b-navbar-nav class="ml-auto">
                 <ListNotifications v-if="user.connected()" :id_user="user.id"></ListNotifications>
                 <b-nav-item v-if="!user.connected()" right v-on:click="connectUser">Connexion</b-nav-item>
+                <b-nav-item v-if="user.connected()" right v-on:click="goUser">Profil</b-nav-item>
                 <b-nav-item v-if="user.connected()" right v-on:click="disconnectUser">Déconnexion</b-nav-item>
                 <b-nav-item v-if="!user.connected()" right v-on:click="signupUser">Inscription</b-nav-item>
             </b-navbar-nav>
@@ -41,6 +42,9 @@
             },
             signupUser(){
                 this.$router.push('/signup');
+            },
+            goUser(){
+                this.$router.push('/user');
             }
         },
     }
