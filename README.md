@@ -10,8 +10,6 @@ Taches effectuées dans l'ordre :
 - Routes appelant les contrôlleurs : `src/ressources` + `src/app.py`
 - Front : `front`
 
-~~Cette méthode non agile a eu pour effet de ne pas nous rendre compte du travail restant à faire (notamment pour le front), ce qui nous a obligé à finir rapidement le projet.~~
-
 # Installation du Notificateur de Série
 Prérequis : 
 Python3, npm
@@ -52,25 +50,19 @@ Surtout présente nos models : `src/models`
 
 ### Héritage
 
-~~Un peu plus compliqué dans le cadre de ce projet étant donné que son utilisation ne nous a pas semblé évidente dans le cadre de ce projet.~~
-
 - Actor et Author heritent de Person (dans `src/models`)
 - ApiHelperTMDB implémente ApiHelper (dans `src/api_helper`), ce dernier étant une classe que nous avons voulu abstraite. Cet héritage était un peu forcé mais permettrait d'avoir plusieurs sources d'API.
 - les erreurs custom héritent de GCErrorException (dans `src/errors`)
 
 ### Polymorphisme
 
-~~Un peu compliqué à utiliser aussi mais à la base de l'utilisation de classe abstraites en python.~~
-
-~~Reste~~ utilisé par NotificationManager vu qu'il hérite de Thread et que la method \_\_init\_\_ ~~semble être~~ est un polymorphisme du \_\_init\_\_ de Thread (vu que ce dernier est appelé.)
+Utilisé par NotificationManager vu qu'il hérite de Thread et que la method \_\_init\_\_ est un polymorphisme du \_\_init\_\_ de Thread (vu que ce dernier est appelé.)
 
 ## Gestion d'erreur
 
 Les erreurs de fonctionnalités détectées dans les routes (utilisateur existant déjà lors de la création, recherche d'une série qui n'existe pas...), sont décrites par le model `src/errors` dans le \_\_init\_\_ de ce dernier.
 
 La détection de l'erreur peut être vue au niveau des routes `src/ressources`.
-
-~~*Une classe par erreur aurait pu être utilisée mais le manque de temps a conduit à cette solution et à l'heritage utilisé*~~
 
 ## Thread
 
