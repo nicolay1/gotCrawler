@@ -1,13 +1,13 @@
 # Context
 
-Ce projet est basé sur la proposition de créer un notificateur de série. Un processus en V à été utilisé lors de sa création, de part une volonté que tout le monde touche à toute les parties du code. Nous avons essayé de respecter PEP 8 et typer au maximum le code afin d'améliorer et l'autocomplete durant le dévelopement.
+Ce projet est basé sur la proposition de créer un notificateur de série. Un processus en V à été utilisé lors de sa création, de par une volonté que tout le monde touche à toute les parties du code. Nous avons essayé de respecter PEP 8 et typer au maximum le code afin d'améliorer et l'autocomplete durant le dévelopement.
 
 Il a au départ été défini un UML [https://ibb.co/cebO0V](https://ibb.co/cebO0V), cet UML a été utilisé comme base du model M(V)C que nous avons tenté d'implémenter. 
 
-Taches effectués dans l'ordre : 
-- Models et la base de donnée en parallèle : `src/db`, `src/models`
-- Controlleurs : `src/controllers`
-- Routes appelant les controlleurs : `src/ressources` + `src/app.py`
+Taches effectuées dans l'ordre : 
+- Modèles et la base de donnée en parallèle : `src/db`, `src/models`
+- Contrôlleurs : `src/controllers`
+- Routes appelant les contrôlleurs : `src/ressources` + `src/app.py`
 - Front : `front`
 
 Cette méthode non agile a eu pour effet de ne pas nous rendre compte du travail restant à faire (notamment pour le front), ce qui nous a obligé à finir rapidement le projet.
